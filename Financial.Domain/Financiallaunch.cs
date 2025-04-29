@@ -3,8 +3,12 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Financial.Domain
 {
-    public class Financiallaunch
+    public class Financiallaunch : Base
     {
+        public Financiallaunch()
+        {
+            
+        }
         public Financiallaunch(CreateFinanciallaunchDto createFinanciallaunchDto)
         {
             IdempotencyKey = createFinanciallaunchDto.IdempotencyKey;
@@ -30,6 +34,19 @@ namespace Financial.Domain
         public string CostCenter { get; private set; }
         public string Description { get; private set; }
 
+        public void Cancel(string? description = null)
+        {
+            this.Status = launchStatusEnum.Canceled;
+            this.Description += description ??  " Cancel: " + description;
+            this.AlterDate = DateTime.Now;
+        }
+
+        public void PayOff()
+        {
+            this.Status = launchStatusEnum.PaidOff;
+            this.Description += " Paid off." ;
+            this.AlterDate = DateTime.Now;
+        }
 
         [NotMapped]
         public bool IdempotencyKeyValid => this.IdempotencyKey.Equals(this.GetIdempotencyKey);

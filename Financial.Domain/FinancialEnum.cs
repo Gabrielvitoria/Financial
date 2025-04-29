@@ -17,6 +17,7 @@ namespace Financial.Domain
     public enum launchStatusEnum
     {
         Open = 1, // Aberto
-        PaidOff = 2  // Quitado
+        PaidOff = 2,  // Quitado
+        Canceled = 3 // Cancelado
     }
 }

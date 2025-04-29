@@ -14,4 +14,9 @@
     <PackageReference Include="Scalar.AspNetCore" Version="2.2.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Financial.Infra\Financial.Infra.csproj" />
+    <ProjectReference Include="..\Financial.Service\Financial.Service.csproj" />
+  </ItemGroup>
+
 </Project>
