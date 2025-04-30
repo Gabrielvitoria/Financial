@@ -15,7 +15,36 @@ namespace Financial.Infra.MapEF
                    .HasColumnName("id")
                    .ValueGeneratedOnAdd();
 
+            builder.Property(a => a.IdempotencyKey)
+                    .IsRequired();
 
+            builder.Property(a=> a.LaunchType)
+                   .IsRequired();
+
+            builder.Property(a => a.PaymentMethod)
+                   .IsRequired();
+
+            builder.Property(a => a.Status)
+                   .IsRequired();
+
+            builder.Property(a => a.CoinType)
+                   .IsRequired();
+
+            builder.Property(a => a.Value)
+                   .IsRequired();
+
+            builder.Property(a => a.Value)
+                   .IsRequired();
+
+            builder.Property(a => a.NameCustomerSupplier)
+                   .IsRequired();
+
+            builder.Property(a => a.CostCenter)
+                   .IsRequired();
+
+            builder.HasIndex(a => a.IdempotencyKey)
+                   .IsUnique()
+                   .HasDatabaseName("IX_Financiallaunch_IdempotencyKey");
         }
     }
 }

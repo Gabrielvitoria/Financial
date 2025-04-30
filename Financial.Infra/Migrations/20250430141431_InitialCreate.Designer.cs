@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Financial.Infra.Migrations
 {
     [DbContext(typeof(DefaultContext))]
-    [Migration("20250430012721_InitialCreate")]
+    [Migration("20250430141431_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -75,6 +75,10 @@ namespace Financial.Infra.Migrations
                         .HasColumnType("numeric");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("IdempotencyKey")
+                        .IsUnique()
+                        .HasDatabaseName("IX_Financiallaunch_IdempotencyKey");
 
                     b.ToTable("Financiallaunch", (string)null);
                 });

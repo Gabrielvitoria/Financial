@@ -33,6 +33,12 @@ namespace Financial.Infra.Migrations
                 {
                     table.PrimaryKey("PK_Financiallaunch", x => x.id);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Financiallaunch_IdempotencyKey",
+                table: "Financiallaunch",
+                column: "IdempotencyKey",
+                unique: true);
         }
 
         /// <inheritdoc />

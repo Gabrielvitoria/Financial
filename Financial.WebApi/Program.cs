@@ -24,7 +24,7 @@ builder.Services.AddServicesDependecie();
 //-> Auto execução das Migrations
 var connectionString = builder.Configuration.GetConnectionString("Default");
 builder.Services.AddDbContext<DefaultContext>(options =>
-     options.UseNpgsql(connectionString, sqlOptions => { sqlOptions.MigrationsAssembly("ProjectManagement.Infra");})
+     options.UseNpgsql(connectionString, sqlOptions => { sqlOptions.MigrationsAssembly("Financial.Infra");})
      );
 
 
@@ -58,6 +58,13 @@ builder.Services.AddAuthorization(options =>
 
 
 var app = builder.Build();
+
+//-> Auto execução das Migrations
+using (var scope = app.Services.CreateAsyncScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<DefaultContext>();
+    await dbContext.Database.EnsureCreatedAsync();
+}
 
 
 //-> Configure the HTTP request pipeline.

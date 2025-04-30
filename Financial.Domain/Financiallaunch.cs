@@ -22,6 +22,7 @@ namespace Financial.Domain
             NameCustomerSupplier = createFinanciallaunchDto.NameCustomerSupplier;
             CostCenter = createFinanciallaunchDto.CostCenter;
             Description = createFinanciallaunchDto.Description;
+            CreateDate = DateTime.Now;
         }
 
         public string IdempotencyKey { get; private set; }
@@ -53,7 +54,7 @@ namespace Financial.Domain
         public bool IdempotencyKeyValid => this.IdempotencyKey.Equals(this.GetIdempotencyKey);
 
         [NotMapped]
-        public string GetIdempotencyKey => $"{nameof(Financiallaunch)}_{this.LaunchType}_{this.PaymentMethod}_{this.Value}_{this.BankAccount}_{this.NameCustomerSupplier}_UNIQUESUFFIX";
+        public string GetIdempotencyKey => $"{nameof(Financiallaunch)}_{this.LaunchType}_{this.PaymentMethod}_{this.Value.ToString()}_{this.BankAccount}_{this.NameCustomerSupplier}_UNIQUESUFFIX";
 
     }
 }

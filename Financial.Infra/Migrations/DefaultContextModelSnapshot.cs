@@ -73,6 +73,10 @@ namespace Financial.Infra.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("IdempotencyKey")
+                        .IsUnique()
+                        .HasDatabaseName("IX_Financiallaunch_IdempotencyKey");
+
                     b.ToTable("Financiallaunch", (string)null);
                 });
 #pragma warning restore 612, 618
