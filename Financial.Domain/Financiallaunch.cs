@@ -22,7 +22,7 @@ namespace Financial.Domain
             NameCustomerSupplier = createFinanciallaunchDto.NameCustomerSupplier;
             CostCenter = createFinanciallaunchDto.CostCenter;
             Description = createFinanciallaunchDto.Description;
-            CreateDate = DateTime.Now;
+            CreateDate = DateTime.UtcNow;
         }
 
         public string IdempotencyKey { get; private set; }
