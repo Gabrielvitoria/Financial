@@ -2,6 +2,7 @@ using Financial.Infra;
 using Financial.Infra.Interfaces;
 using Financial.Infra.Repositories;
 using Financial.Service;
+using Microsoft.EntityFrameworkCore;
 using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -22,6 +23,13 @@ builder.Services.AddTransient<IProcessLaunchservice, ProcessLaunchservice>();
 //Repos
 builder.Services.AddTransient<IProcessLaunchRepository, ProcessLaunchRepository>();
 
+
+var connectionString = builder.Configuration.GetConnectionString("Default");
+
+// para auto execução das Migrations
+builder.Services.AddDbContext<DefaultContext>(options =>
+     options.UseNpgsql(connectionString, sqlOptions => { sqlOptions.MigrationsAssembly("ProjectManagement.Infra");})
+     );
 
 var app = builder.Build();
 

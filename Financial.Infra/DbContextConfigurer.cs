@@ -13,5 +13,7 @@ namespace Financial.Infra
           
             return new DefaultContext(optionsBuilder.Options);
         }
+
+        
     }
 }
