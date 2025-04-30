@@ -54,5 +54,6 @@ namespace Financial.Domain
 
         [NotMapped]
         public string GetIdempotencyKey => $"{nameof(Financiallaunch)}_{this.LaunchType}_{this.PaymentMethod}_{this.Value}_{this.BankAccount}_{this.NameCustomerSupplier}_UNIQUESUFFIX";
+
     }
 }

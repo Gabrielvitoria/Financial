@@ -8,7 +8,7 @@ namespace Financial.Domain.Dtos
         public string IdempotencyKey { get; set; }
 
         [Required]
-        public launchTypeEnum LaunchType { get; private set; }
+        public launchTypeEnum LaunchType { get; set; }
 
         [Required]
         public launchPaymentMethodEnum PaymentMethod { get; set; }
@@ -32,5 +32,6 @@ namespace Financial.Domain.Dtos
         public string CostCenter { get; set; }
 
         public string Description { get; set; }
+
     }
 }
