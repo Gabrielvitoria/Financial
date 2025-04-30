@@ -7,7 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.9.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Financial.Common\Financial.Common.csproj" />
     <ProjectReference Include="..\Financial.Domain\Financial.Domain.csproj" />
+    <ProjectReference Include="..\Financial.Infra\Financial.Infra.csproj" />
   </ItemGroup>
 
 </Project>

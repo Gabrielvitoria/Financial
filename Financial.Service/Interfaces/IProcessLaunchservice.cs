@@ -1,6 +1,6 @@
 ﻿using Financial.Domain.Dtos;
 
-namespace Financial.Service
+namespace Financial.Service.Interfaces
 {
     public interface IProcessLaunchservice
     {

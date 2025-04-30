@@ -10,12 +10,15 @@
   <ItemGroup>
     <PackageReference Include="coverlet.collector" Version="6.0.2" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.13.0" />
+    <PackageReference Include="Moq" Version="4.20.72" />
     <PackageReference Include="xunit" Version="2.9.2" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.8.2" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Financial.Domain\Financial.Domain.csproj" />
+    <ProjectReference Include="..\Financial.Infra\Financial.Infra.csproj" />
+    <ProjectReference Include="..\Financial.Service\Financial.Service.csproj" />
   </ItemGroup>
 
   <ItemGroup>

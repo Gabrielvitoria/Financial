@@ -11,6 +11,7 @@ namespace Financial.Domain
         }
         public Financiallaunch(CreateFinanciallaunchDto createFinanciallaunchDto)
         {
+            Id = Guid.CreateVersion7();
             IdempotencyKey = createFinanciallaunchDto.IdempotencyKey;
             LaunchType = createFinanciallaunchDto.LaunchType;
             PaymentMethod = createFinanciallaunchDto.PaymentMethod;

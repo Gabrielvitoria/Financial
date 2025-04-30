@@ -6,7 +6,7 @@ namespace Financial.Domain
 {
     public class Base
     {
-        public Guid Id { get; private set; }
+        public Guid Id { get; protected set; }
         public DateTime CreateDate { get; protected set; }
         public DateTime AlterDate { get; protected set; }
 
