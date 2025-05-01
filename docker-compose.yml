@@ -8,8 +8,7 @@ services:
     depends_on: 
       - database
     ports:
-      - "44367:44367" # HTTP mapping
-      - "44398:44399" # HTTPS mapping (host:container)
+      - "44367:8080" # HTTP mapping
     restart: always
     environment: 
       - DBHOST=database

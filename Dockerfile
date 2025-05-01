@@ -5,9 +5,8 @@ FROM mcr.microsoft.com/dotnet/aspnet:10.0-preview AS base
 USER app
 WORKDIR /app
 EXPOSE 8080
-EXPOSE 8081
 EXPOSE 44399
-ENV ASPNETCORE_URLS=http://*:44399
+ENV ASPNETCORE_URLS=http://*:8080
 ENV ASPNETCORE_ENVIRONMENT="Docker"
 
 # This stage is used to build the service project
