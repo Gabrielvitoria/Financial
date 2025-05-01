@@ -27,5 +27,23 @@ services:
       - POSTGRES_DB=FinanciallaunchDB 
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres 
+  rabbitmq:
+    image: rabbitmq:management
+    container_name: rabbitmq
+    restart: always
+    ports:
+      - 5672:5672
+      - 15672:15672
+    environment:
+      RABBITMQ_DEFAULT_USER: financial
+      RABBITMQ_DEFAULT_PASS: financial
+    volumes:
+      - rabbitmq-lib:/var/lib/rabbitmq/
+      - rabbitmq-log:/var/log/rabbitmq
+
 volumes:
   db-volume:
+  rabbitmq-lib:
+    driver: local
+  rabbitmq-log:
+    driver: local
