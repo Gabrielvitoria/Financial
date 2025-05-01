@@ -3,11 +3,13 @@ using Financial.Infra;
 using Financial.Service;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Scalar.AspNetCore;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
+var connectionString = builder.Configuration.GetConnectionString("Default");
 
 // Add services to the container.
 builder.Services.AddControllers();
@@ -22,7 +24,7 @@ builder.Services.AddRespositoriDependecie();
 builder.Services.AddServicesDependecie();
 
 //-> Auto execução das Migrations
-var connectionString = builder.Configuration.GetConnectionString("Default");
+
 builder.Services.AddDbContext<DefaultContext>(options =>
      options.UseNpgsql(connectionString, sqlOptions => { sqlOptions.MigrationsAssembly("Financial.Infra");})
      );

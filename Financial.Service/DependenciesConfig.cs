@@ -21,6 +21,7 @@ namespace Financial.Service
         {
             services.AddTransient<IProcessLaunchservice, ProcessLaunchservice>();            
             services.AddTransient<ITokenService, TokenService>();
+            services.AddTransient<INotificationEvent, NotificationEventService>();
 
             return services;
         }

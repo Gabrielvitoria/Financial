@@ -9,10 +9,13 @@ namespace Financial.Service
     public class ProcessLaunchservice : IProcessLaunchservice
     {
         private readonly IProcessLaunchRepository _processLaunchRepository;
+        private readonly INotificationEvent _notificationEvent;
 
-        public ProcessLaunchservice(IProcessLaunchRepository processLaunchRepository)
+        public ProcessLaunchservice(IProcessLaunchRepository processLaunchRepository,
+            INotificationEvent notificationEvent)
         {
             _processLaunchRepository = processLaunchRepository;
+            _notificationEvent = notificationEvent;
         }
         public async Task<FinanciallaunchDto> ProcessNewLaunchAsync(CreateFinanciallaunchDto createFinanciallaunchDto)
         {
@@ -33,6 +36,8 @@ namespace Financial.Service
                 }
 
                 var launch = await _processLaunchRepository.CreateAsync(financialLaunchEntity);
+
+                await _notificationEvent.SendAsync(new FinanciallaunchEvent(launch));
 
                 return launch.MapToDto();
 

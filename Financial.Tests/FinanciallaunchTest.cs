@@ -2,6 +2,7 @@
 using Financial.Domain.Dtos;
 using Financial.Infra.Interfaces;
 using Financial.Service;
+using Financial.Service.Interfaces;
 using Moq;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -11,12 +12,14 @@ namespace Financial.Tests
     public class FinanciallaunchTest
     {
         private readonly Mock<IProcessLaunchRepository> _processLaunchRepositoryMock;
+        private readonly Mock<INotificationEvent> _INotificationEvent;
         private readonly ProcessLaunchservice _processLaunchservice;
 
         public FinanciallaunchTest()
         {
             _processLaunchRepositoryMock = new Mock<IProcessLaunchRepository>();
-            _processLaunchservice = new ProcessLaunchservice(_processLaunchRepositoryMock.Object);
+            _INotificationEvent = new Mock<INotificationEvent>();
+            _processLaunchservice = new ProcessLaunchservice(_processLaunchRepositoryMock.Object, _INotificationEvent.Object);
         }
 
 
