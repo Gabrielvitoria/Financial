@@ -6,8 +6,8 @@ USER app
 WORKDIR /app
 EXPOSE 8080
 EXPOSE 8081
-EXPOSE 44398
-ENV ASPNETCORE_URLS=http://*:44398
+EXPOSE 44399
+ENV ASPNETCORE_URLS=http://*:44399
 ENV ASPNETCORE_ENVIRONMENT="Docker"
 
 # This stage is used to build the service project

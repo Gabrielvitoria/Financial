@@ -37,7 +37,7 @@ namespace Financial.Service
 
                 var launch = await _processLaunchRepository.CreateAsync(financialLaunchEntity);
 
-                await _notificationEvent.SendAsync(new FinanciallaunchEvent(launch));
+              //  await _notificationEvent.SendAsync(new FinanciallaunchEvent(launch));
 
                 return launch.MapToDto();
 
