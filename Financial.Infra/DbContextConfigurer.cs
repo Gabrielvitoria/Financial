@@ -19,9 +19,7 @@ namespace Financial.Infra
         {
 
             var environmentName = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Development";
-            Console.WriteLine($"Environment: {environmentName}");
-            Console.WriteLine($"Current Directory: {Directory.GetCurrentDirectory()}"); // Diagnóstico
-
+           
             var builder = new ConfigurationBuilder()
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
                 .AddJsonFile($"appsettings.{environmentName}.json", optional: true);
@@ -29,9 +27,7 @@ namespace Financial.Infra
             var configuration = builder.Build();
             var connectionString = configuration.GetConnectionString("Default");
 
-
             _logger.LogInformation("CONNECTION STRING:", connectionString);
-
 
             var optionsBuilder = new DbContextOptionsBuilder<DefaultContext>();
             
