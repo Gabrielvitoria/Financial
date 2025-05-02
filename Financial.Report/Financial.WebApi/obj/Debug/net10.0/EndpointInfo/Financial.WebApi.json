@@ -1,0 +1,34 @@
+{
+  "openapi": "3.1.1",
+  "info": {
+    "title": "Financial.WebApi | v1",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:63732/"
+    },
+    {
+      "url": "https://localhost:44346/"
+    }
+  ],
+  "paths": {
+    "/api/v1/Report": {
+      "get": {
+        "tags": [
+          "Report"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "Report"
+    }
+  ]
+}

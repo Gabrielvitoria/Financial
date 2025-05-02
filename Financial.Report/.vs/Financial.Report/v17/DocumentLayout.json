@@ -1,0 +1,382 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Projetos\\Financial\\Financial.Report\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{78808A52-CD94-46BD-BB9A-251C15B4907A}|Financial.WebApi\\Financial.WebApi.csproj|c:\\projetos\\financial\\financial.report\\financial.webapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{78808A52-CD94-46BD-BB9A-251C15B4907A}|Financial.WebApi\\Financial.WebApi.csproj|solutionrelative:financial.webapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3C929BAA-B861-4253-B18E-6BA22A80B74A}|Financial.Service\\Financial.Service.csproj|c:\\projetos\\financial\\financial.report\\financial.service\\dependenciesconfig.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3C929BAA-B861-4253-B18E-6BA22A80B74A}|Financial.Service\\Financial.Service.csproj|solutionrelative:financial.service\\dependenciesconfig.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3C929BAA-B861-4253-B18E-6BA22A80B74A}|Financial.Service\\Financial.Service.csproj|c:\\projetos\\financial\\financial.report\\financial.service\\interfaces\\ifinanciallaunchservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3C929BAA-B861-4253-B18E-6BA22A80B74A}|Financial.Service\\Financial.Service.csproj|solutionrelative:financial.service\\interfaces\\ifinanciallaunchservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3C929BAA-B861-4253-B18E-6BA22A80B74A}|Financial.Service\\Financial.Service.csproj|c:\\projetos\\financial\\financial.report\\financial.service\\financiallaunchservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3C929BAA-B861-4253-B18E-6BA22A80B74A}|Financial.Service\\Financial.Service.csproj|solutionrelative:financial.service\\financiallaunchservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3C929BAA-B861-4253-B18E-6BA22A80B74A}|Financial.Service\\Financial.Service.csproj|c:\\projetos\\financial\\financial.report\\financial.service\\works\\financiallaunchbackgroundservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3C929BAA-B861-4253-B18E-6BA22A80B74A}|Financial.Service\\Financial.Service.csproj|solutionrelative:financial.service\\works\\financiallaunchbackgroundservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{41AE50DF-CD04-4C73-9BFE-84B72FD0AC1F}|Financial.Common\\Financial.Common.csproj|c:\\projetos\\financial\\financial.report\\financial.common\\financiallaunchevent.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{41AE50DF-CD04-4C73-9BFE-84B72FD0AC1F}|Financial.Common\\Financial.Common.csproj|solutionrelative:financial.common\\financiallaunchevent.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{78808A52-CD94-46BD-BB9A-251C15B4907A}|Financial.WebApi\\Financial.WebApi.csproj|c:\\projetos\\financial\\financial.report\\financial.webapi\\appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{78808A52-CD94-46BD-BB9A-251C15B4907A}|Financial.WebApi\\Financial.WebApi.csproj|solutionrelative:financial.webapi\\appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{78808A52-CD94-46BD-BB9A-251C15B4907A}|Financial.WebApi\\Financial.WebApi.csproj|c:\\projetos\\financial\\financial.report\\financial.webapi\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{78808A52-CD94-46BD-BB9A-251C15B4907A}|Financial.WebApi\\Financial.WebApi.csproj|solutionrelative:financial.webapi\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{78808A52-CD94-46BD-BB9A-251C15B4907A}|Financial.WebApi\\Financial.WebApi.csproj|c:\\projetos\\financial\\financial.report\\financial.webapi\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{78808A52-CD94-46BD-BB9A-251C15B4907A}|Financial.WebApi\\Financial.WebApi.csproj|solutionrelative:financial.webapi\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{78808A52-CD94-46BD-BB9A-251C15B4907A}|Financial.WebApi\\Financial.WebApi.csproj|c:\\projetos\\financial\\financial.report\\financial.webapi\\controllers\\reportcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{78808A52-CD94-46BD-BB9A-251C15B4907A}|Financial.WebApi\\Financial.WebApi.csproj|solutionrelative:financial.webapi\\controllers\\reportcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 410,
+          "SelectedChildIndex": 52,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:130:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:129:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:138:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:162:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:155:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:156:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:143:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:132:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:149:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:151:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:147:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:140:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:141:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:137:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:138:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:139:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:143:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:144:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:145:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:142:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:133:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:134:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:135:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:140:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:146:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:147:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:148:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:149:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:150:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:131:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:135:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:136:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:137:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:144:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:153:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:152:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:139:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:141:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:142:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:151:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:153:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:158:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:160:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:159:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:146:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:145:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:148:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "DependenciesConfig.cs",
+              "DocumentMoniker": "C:\\Projetos\\Financial\\Financial.Report\\Financial.Service\\DependenciesConfig.cs",
+              "RelativeDocumentMoniker": "Financial.Service\\DependenciesConfig.cs",
+              "ToolTip": "C:\\Projetos\\Financial\\Financial.Report\\Financial.Service\\DependenciesConfig.cs",
+              "RelativeToolTip": "Financial.Service\\DependenciesConfig.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABgAAABHAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-02T06:04:16.267Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "FinanciallaunchEvent.cs",
+              "DocumentMoniker": "C:\\Projetos\\Financial\\Financial.Report\\Financial.Common\\FinanciallaunchEvent.cs",
+              "RelativeDocumentMoniker": "Financial.Common\\FinanciallaunchEvent.cs",
+              "ToolTip": "C:\\Projetos\\Financial\\Financial.Report\\Financial.Common\\FinanciallaunchEvent.cs",
+              "RelativeToolTip": "Financial.Common\\FinanciallaunchEvent.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAlAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-02T05:53:16.455Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "appsettings.Development.json",
+              "DocumentMoniker": "C:\\Projetos\\Financial\\Financial.Report\\Financial.WebApi\\appsettings.Development.json",
+              "RelativeDocumentMoniker": "Financial.WebApi\\appsettings.Development.json",
+              "ToolTip": "C:\\Projetos\\Financial\\Financial.Report\\Financial.WebApi\\appsettings.Development.json",
+              "RelativeToolTip": "Financial.WebApi\\appsettings.Development.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAADAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-05-02T05:37:05.393Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Projetos\\Financial\\Financial.Report\\Financial.WebApi\\appsettings.json",
+              "RelativeDocumentMoniker": "Financial.WebApi\\appsettings.json",
+              "ToolTip": "C:\\Projetos\\Financial\\Financial.Report\\Financial.WebApi\\appsettings.json",
+              "RelativeToolTip": "Financial.WebApi\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-05-02T05:23:54.386Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Projetos\\Financial\\Financial.Report\\Financial.WebApi\\Program.cs",
+              "RelativeDocumentMoniker": "Financial.WebApi\\Program.cs",
+              "ToolTip": "C:\\Projetos\\Financial\\Financial.Report\\Financial.WebApi\\Program.cs",
+              "RelativeToolTip": "Financial.WebApi\\Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAyAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-02T05:23:34.463Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "FinanciallaunchBackgroundService.cs",
+              "DocumentMoniker": "C:\\Projetos\\Financial\\Financial.Report\\Financial.Service\\Works\\FinanciallaunchBackgroundService.cs",
+              "RelativeDocumentMoniker": "Financial.Service\\Works\\FinanciallaunchBackgroundService.cs",
+              "ToolTip": "C:\\Projetos\\Financial\\Financial.Report\\Financial.Service\\Works\\FinanciallaunchBackgroundService.cs",
+              "RelativeToolTip": "Financial.Service\\Works\\FinanciallaunchBackgroundService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAD4AAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-02T04:59:51.84Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "IFinanciallaunchService.cs",
+              "DocumentMoniker": "C:\\Projetos\\Financial\\Financial.Report\\Financial.Service\\Interfaces\\IFinanciallaunchService.cs",
+              "RelativeDocumentMoniker": "Financial.Service\\Interfaces\\IFinanciallaunchService.cs",
+              "ToolTip": "C:\\Projetos\\Financial\\Financial.Report\\Financial.Service\\Interfaces\\IFinanciallaunchService.cs",
+              "RelativeToolTip": "Financial.Service\\Interfaces\\IFinanciallaunchService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAsAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-02T03:52:02.233Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "FinanciallaunchService.cs",
+              "DocumentMoniker": "C:\\Projetos\\Financial\\Financial.Report\\Financial.Service\\FinanciallaunchService.cs",
+              "RelativeDocumentMoniker": "Financial.Service\\FinanciallaunchService.cs",
+              "ToolTip": "C:\\Projetos\\Financial\\Financial.Report\\Financial.Service\\FinanciallaunchService.cs",
+              "RelativeToolTip": "Financial.Service\\FinanciallaunchService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-02T03:51:35.973Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "launchSettings.json",
+              "DocumentMoniker": "C:\\Projetos\\Financial\\Financial.Report\\Financial.WebApi\\Properties\\launchSettings.json",
+              "RelativeDocumentMoniker": "Financial.WebApi\\Properties\\launchSettings.json",
+              "ToolTip": "C:\\Projetos\\Financial\\Financial.Report\\Financial.WebApi\\Properties\\launchSettings.json",
+              "RelativeToolTip": "Financial.WebApi\\Properties\\launchSettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABkAAAAeAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-05-02T03:25:28.56Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "ReportController.cs",
+              "DocumentMoniker": "C:\\Projetos\\Financial\\Financial.Report\\Financial.WebApi\\Controllers\\ReportController.cs",
+              "RelativeDocumentMoniker": "Financial.WebApi\\Controllers\\ReportController.cs",
+              "ToolTip": "C:\\Projetos\\Financial\\Financial.Report\\Financial.WebApi\\Controllers\\ReportController.cs",
+              "RelativeToolTip": "Financial.WebApi\\Controllers\\ReportController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAgAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-02T03:08:18.267Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+[
+  {
+    "ContainingType": "Financial.WebApi.Controllers.ReportController",
+    "Method": "Get",
+    "RelativePath": "api/v1/Report",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  }
+]

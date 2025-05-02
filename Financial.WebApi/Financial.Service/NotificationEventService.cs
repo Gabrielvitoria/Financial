@@ -66,14 +66,14 @@ namespace Financial.Service
         {
             var config = new ConnectionQueueMenssage
             {
-                HostName = _configuration.GetSection("ConnectionQueueMenssage").GetSection("HostName").Value,
-                Port = int.Parse(_configuration.GetSection("ConnectionQueueMenssage").GetSection("Port").Value),
-                UserName = _configuration.GetSection("ConnectionQueueMenssage").GetSection("UserName").Value,
-                Password = _configuration.GetSection("ConnectionQueueMenssage").GetSection("Password").Value,
-                VirtualHost = _configuration.GetSection("ConnectionQueueMenssage").GetSection("VirtualHost").Value,
-                QueueName = _configuration.GetSection("ConnectionQueueMenssage").GetSection("QueueName").Value,
-                ExchangeName = _configuration.GetSection("ConnectionQueueMenssage").GetSection("ExchangeName").Value,
-                RoutingKey = _configuration.GetSection("ConnectionQueueMenssage").GetSection("RoutingKey").Value
+                HostName = _configuration["ConnectionQueueMenssage:HostName"],
+                Port = int.Parse(_configuration["ConnectionQueueMenssage:Port"]),
+                UserName = _configuration["ConnectionQueueMenssage:UserName"],
+                Password = _configuration["ConnectionQueueMenssage:Password"],
+                VirtualHost = _configuration["ConnectionQueueMenssage:VirtualHost"],
+                QueueName = _configuration["ConnectionQueueMenssage:QueueName"],
+                ExchangeName = _configuration["ConnectionQueueMenssage:ExchangeName"],
+                RoutingKey = _configuration["ConnectionQueueMenssage:RoutingKey"]
             };
 
             return config;

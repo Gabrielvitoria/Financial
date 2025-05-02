@@ -1,0 +1,16 @@
+C:\Projetos\Financial\Financial.Report\Financial.Common\bin\Debug\net10.0\Financial.Common.deps.json
+C:\Projetos\Financial\Financial.Report\Financial.Common\bin\Debug\net10.0\Financial.Common.dll
+C:\Projetos\Financial\Financial.Report\Financial.Common\bin\Debug\net10.0\Financial.Common.pdb
+C:\Projetos\Financial\Financial.Report\Financial.Common\obj\Debug\net10.0\Financial.Common.GeneratedMSBuildEditorConfig.editorconfig
+C:\Projetos\Financial\Financial.Report\Financial.Common\obj\Debug\net10.0\Financial.Common.AssemblyInfoInputs.cache
+C:\Projetos\Financial\Financial.Report\Financial.Common\obj\Debug\net10.0\Financial.Common.AssemblyInfo.cs
+C:\Projetos\Financial\Financial.Report\Financial.Common\obj\Debug\net10.0\Financial.Common.csproj.CoreCompileInputs.cache
+C:\Projetos\Financial\Financial.Report\Financial.Common\obj\Debug\net10.0\Financial.Common.sourcelink.json
+C:\Projetos\Financial\Financial.Report\Financial.Common\obj\Debug\net10.0\Financial.Common.dll
+C:\Projetos\Financial\Financial.Report\Financial.Common\obj\Debug\net10.0\refint\Financial.Common.dll
+C:\Projetos\Financial\Financial.Report\Financial.Common\obj\Debug\net10.0\Financial.Common.pdb
+C:\Projetos\Financial\Financial.Report\Financial.Common\obj\Debug\net10.0\ref\Financial.Common.dll
+C:\Projetos\Financial\Financial.Report\Financial.Common\bin\Debug\net10.0\Financial.Domain.dll
+C:\Projetos\Financial\Financial.Report\Financial.Common\bin\Debug\net10.0\Financial.Domain.pdb
+C:\Projetos\Financial\Financial.Report\Financial.Common\obj\Debug\net10.0\Financial.Common.csproj.AssemblyReference.cache
+C:\Projetos\Financial\Financial.Report\Financial.Common\obj\Debug\net10.0\Financia.1D8BC7CA.Up2Date

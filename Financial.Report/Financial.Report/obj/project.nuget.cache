@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "dgSpecHash": "81qIG77m6LA=",
+  "success": true,
+  "projectFilePath": "C:\\Projetos\\Financial\\Financial.Report\\Financial.Report\\Financial.Report.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\GabrielVitoria\\.nuget\\packages\\microsoft.aspnetcore.openapi\\10.0.0-preview.3.25172.1\\microsoft.aspnetcore.openapi.10.0.0-preview.3.25172.1.nupkg.sha512",
+    "C:\\Users\\GabrielVitoria\\.nuget\\packages\\microsoft.openapi\\2.0.0-preview.11\\microsoft.openapi.2.0.0-preview.11.nupkg.sha512",
+    "C:\\Users\\GabrielVitoria\\.nuget\\packages\\microsoft.visualstudio.azure.containers.tools.targets\\1.22.1-preview.1\\microsoft.visualstudio.azure.containers.tools.targets.1.22.1-preview.1.nupkg.sha512"
+  ],
+  "logs": []
+}
