@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Financial.Service.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Financial.WebApi.Controllers
@@ -8,11 +9,29 @@ namespace Financial.WebApi.Controllers
     [ApiController]
     public class ReportController : ControllerBase
     {
-        [HttpGet]
-        public IActionResult Get()
+        private readonly IFinanciallaunchService _financiallaunchService;
+        public ReportController(IFinanciallaunchService financiallaunchService)
         {
-            return Ok("Relatorio de vendas");
+            _financiallaunchService = financiallaunchService;
         }
-        
+
+        [HttpGet]
+        public async Task<IActionResult> GetAsync()
+        {
+            try
+            {
+                return Ok(await _financiallaunchService.GetSaldoDiarioAsync());
+            }
+            catch (ApplicationException aex)
+            {
+                return NotFound(aex.Message);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
     }
 }

@@ -13,6 +13,20 @@ services:
     environment: 
       - DBHOST=database
       - ASPNETCORE_ENVIRONMENT=Docker
+  # api-report:
+  #   image: financial-report-image-app
+  #   container_name: financial-report-app
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile
+  #   depends_on: 
+  #     - rabbitmq
+  #   ports:
+  #     - "44368:8081" # HTTP mapping
+  #   restart: always
+  #   environment: 
+  #     - DBHOST=databaserabbitmq
+  #     - ASPNETCORE_ENVIRONMENT=Docker      
   database:
     image: postgres
     container_name: postgres
@@ -40,7 +54,11 @@ services:
     volumes:
       - rabbitmq-lib:/var/lib/rabbitmq/
       - rabbitmq-log:/var/log/rabbitmq
-
+  redis:
+    image: redis
+    command: redis-server --requirepass Redis2019!
+    ports:
+      - "6379:6379"
 volumes:
   db-volume:
   rabbitmq-lib:

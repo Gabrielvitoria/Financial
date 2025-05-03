@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="9.0.2" />
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="9.0.4" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.4" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.4" />
@@ -17,6 +18,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Financial.Common\Financial.Common.csproj" />
     <ProjectReference Include="..\Financial.Domain\Financial.Domain.csproj" />
+    <ProjectReference Include="..\Financial.Infra\Financial.Infra.csproj" />
   </ItemGroup>
 
   <ItemGroup>

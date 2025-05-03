@@ -1,5 +1,6 @@
 ﻿using Financial.Common;
 using Financial.Domain.Events;
+using Financial.Service.Interfaces;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -12,16 +13,17 @@ namespace Financial.Service.Works
 {
     public class FinanciallaunchBackgroundService : BackgroundService
     {
+        private readonly IFinanciallaunchService _financiallaunchService;
         private readonly ILogger<FinanciallaunchBackgroundService> _logger;
         private readonly IConfiguration _configuration;
         private IConnection _connection;
         private IChannel _channel;
 
-        public FinanciallaunchBackgroundService(ILogger<FinanciallaunchBackgroundService> logger, IConfiguration configuration)
+        public FinanciallaunchBackgroundService(IFinanciallaunchService financiallaunchService, ILogger<FinanciallaunchBackgroundService> logger, IConfiguration configuration)
         {
+            _financiallaunchService = financiallaunchService;
             _logger = logger;
             _configuration = configuration;
-
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -40,12 +42,11 @@ namespace Financial.Service.Works
 
                      var receivedEvent = JsonSerializer.Deserialize<FinanciallaunchEvent>(jsonMessage);
 
-
-                     // Process the receivedEvent here
                      _logger.LogInformation($"Processing event: {receivedEvent}");
-              
 
-                    await _channel.BasicAckAsync(deliveryTag: ea.DeliveryTag, multiple: false); // Acknowledge the message
+                     await _financiallaunchService.ProcessesFinancialLauchAsync(receivedEvent);
+
+                     await _channel.BasicAckAsync(deliveryTag: ea.DeliveryTag, multiple: false); // Acknowledge the message
                  }
                  catch (Exception ex)
                  {
