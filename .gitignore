@@ -1,0 +1,17 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/Financial.Report/Financial.Infra/obj
+/Financial.Report/Financial.Infra/bin
+/Financial.Report/Financial.Common/obj
+/Financial.Report/Financial.Common/bin
+/Financial.Report/Financial.Domain/obj
+/Financial.Report/Financial.Domain/bin
+/Financial.Report/Financial.InfraWebApi/bin
+/Financial.Report/Financial.WebApi/obj
+/Financial.Report/Financial.WebApi/bin
+/Financial.Report/Financial.Service/obj
+/Financial.Report/Financial.Service/bin
+/Financial.Report/.vs
+
