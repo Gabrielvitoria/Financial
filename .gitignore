@@ -361,3 +361,11 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/Financial.Report/Financial.WebApi/bin
+/Financial.Report/Financial.Service/bin/Debug/net10.0/Financial.Service.deps.json
+/Financial.Report/Financial.Service/bin/Debug/net10.0/Financial.Service.dll
+/Financial.Report/Financial.Service/bin/Debug/net10.0/Financial.Service.pdb
+/Financial.Report/Financial.Service/obj/Debug/net10.0/ref/Financial.Service.dll
+/Financial.Report/Financial.Service/obj/Debug/net10.0/refint/Financial.Service.dll
+/Financial.Report/Financial.WebApi/obj/Debug/net10.0/ref/Financial.WebApi.dll
+/Financial.Report/Financial.WebApi/obj/Debug/net10.0/refint/Financial.WebApi.dll
