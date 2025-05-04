@@ -51,9 +51,8 @@ namespace Financial.Infra.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("IdempotencyKey")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<Guid>("IdempotencyKey")
+                        .HasColumnType("uuid");
 
                     b.Property<int>("LaunchType")
                         .HasColumnType("integer");

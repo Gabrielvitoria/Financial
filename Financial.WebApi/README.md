@@ -8,3 +8,9 @@ Subir ambiente
 
 Acessar api
 ## http://localhost:44367/scalar/v1
+
+
+## Migrations
+- set FInancial.Infra no Manager Console.
+- Execute:
+dotnet ef migrations add "Alter_DescricaoDesejada" --project Financial.Infra

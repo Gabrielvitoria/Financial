@@ -14,7 +14,7 @@ namespace Financial.Domain
             if (!createFinanciallaunchDto.IdempotencyKeyValid) return;
 
             Id = Guid.CreateVersion7();
-            IdempotencyKey = new Guid(createFinanciallaunchDto.IdempotencyKey);
+            IdempotencyKey = new Guid(createFinanciallaunchDto.IdempotencyKey.ToUpper());
             LaunchType = createFinanciallaunchDto.LaunchType;
             PaymentMethod = createFinanciallaunchDto.PaymentMethod;
             Status = launchStatusEnum.Open;

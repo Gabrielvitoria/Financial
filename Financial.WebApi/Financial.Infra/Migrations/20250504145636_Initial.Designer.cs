@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Financial.Infra.Migrations
 {
     [DbContext(typeof(DefaultContext))]
-    [Migration("20250430141431_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20250504145636_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -54,9 +54,8 @@ namespace Financial.Infra.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("IdempotencyKey")
-                        .IsRequired()
-                        .HasColumnType("text");
+                    b.Property<Guid>("IdempotencyKey")
+                        .HasColumnType("uuid");
 
                     b.Property<int>("LaunchType")
                         .HasColumnType("integer");
