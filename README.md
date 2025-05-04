@@ -1,25 +1,24 @@
-# Financial.WebApi
+# Sistema de lançamentos financeiros e saldo diario Financial Web Api
 
-## Subir ambiente: /Financial
+# Subir ambiente: /Financial
 -> docker-compose up -d --build
 
-## Financial App: 
+# Financial App: 
 -> http://localhost:44367/scalar/v1
 
-## FInancial App Report
+# FInancial App Report
 -> http://localhost:44368/scalar/v1
 
-## RabbitMQ Manager
+# RabbitMQ Manager
 -> http://localhost:15672/#/
 
 
-
-
-
-## Criar novas Migrations
+# Criar novas Migrations
 - set Financial.Infra no Manager Console.
 - Execute:
 dotnet ef migrations add "Alter_DescricaoDesejada" --project Financial.Infra
 
-## Construir imagem:
+
+# Construir imagem individual:
 -> docker build -t financial-app -f Dockerfile .
+-> docker build -t financial-report-image-app -f Dockerfile .
