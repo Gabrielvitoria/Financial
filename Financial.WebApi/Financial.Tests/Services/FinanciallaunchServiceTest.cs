@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Financial.Tests.Services
 {
-    public class FinanciallaunchService
+    public class FinanciallaunchServiceTest
     {
 
         [Fact]
