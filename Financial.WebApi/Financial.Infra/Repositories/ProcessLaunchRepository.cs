@@ -26,7 +26,7 @@ namespace Financial.Infra.Repositories
 
         public async Task<Financiallaunch?> GetByIdempotencyKeyAsync(string idempotencyKey)
         {
-            return await _context.Financiallaunch.AsNoTracking().FirstOrDefaultAsync(x => x.IdempotencyKey.Equals(idempotencyKey));
+            return await _context.Financiallaunch.AsNoTracking().FirstOrDefaultAsync(x => x.IdempotencyKey.Equals(new Guid(idempotencyKey)));
         }
     }
 }
