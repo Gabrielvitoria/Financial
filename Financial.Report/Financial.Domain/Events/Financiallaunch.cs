@@ -2,15 +2,15 @@
 {
     public class Financiallaunch
     {
-        public string IdempotencyKey { get; private set; }
-        public string LaunchType { get; private set; }
-        public string PaymentMethod { get; private set; }
-        public string Status { get; private set; }
-        public string CoinType { get; private set; }
-        public decimal Value { get; private set; }
-        public string BankAccount { get; private set; }
-        public string NameCustomerSupplier { get; private set; }
-        public string CostCenter { get; private set; }
-        public string Description { get; private set; }
+        public string IdempotencyKey { get; set; }
+        public int LaunchType { get; set; }
+        public int PaymentMethod { get; set; }
+        public int Status { get; set; }
+        public string CoinType { get; set; }
+        public decimal Value { get; set; }
+        public string BankAccount { get; set; }
+        public string NameCustomerSupplier { get; set; }
+        public string CostCenter { get; set; }
+        public string Description { get; set; }
     }
 }

@@ -42,7 +42,7 @@ namespace Financial.Service.Works
 
                      var receivedEvent = JsonSerializer.Deserialize<FinanciallaunchEvent>(jsonMessage);
 
-                     _logger.LogInformation($"Processing event: {receivedEvent}");
+                     _logger.LogInformation($"Processing event: {receivedEvent}", receivedEvent);
 
                      await _financiallaunchService.ProcessesFinancialLauchAsync(receivedEvent);
 

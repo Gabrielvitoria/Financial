@@ -2,6 +2,7 @@
 using Financial.Domain.Dtos;
 using Financial.Service.Interfaces;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Exceptions;
 using System.Text;
@@ -13,9 +14,12 @@ namespace Financial.Service
     public class NotificationEventService : INotificationEvent
     {
         private readonly IConfiguration _configuration;
-        public NotificationEventService(IConfiguration configuration)
+        private readonly ILogger<NotificationEventService> _logger;
+        public NotificationEventService(IConfiguration configuration, ILogger<NotificationEventService> logger)
         {
             _configuration = configuration;
+            _logger = logger;
+
         }
         public async Task SendAsync(FinanciallaunchEvent financiallaunchEvent)
         {
@@ -32,7 +36,11 @@ namespace Financial.Service
 
                 var body = Encoding.UTF8.GetBytes(jsonMessage);
 
+                _logger.LogInformation($"Publis channel: {body}");
+
                 await channel.BasicPublishAsync(exchange: string.Empty, routingKey: config.RoutingKey, body: body);
+
+                _logger.LogInformation($"Publis channel done");
 
             }
             catch (BrokerUnreachableException ex)

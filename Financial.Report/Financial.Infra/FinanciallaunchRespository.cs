@@ -1,6 +1,7 @@
 ﻿using Financial.Infra.Interfaces;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using StackExchange.Redis;
 using System.Globalization;
 
@@ -11,13 +12,16 @@ namespace Financial.Infra
         private readonly IConfiguration _configuration;
         private readonly IDistributedCache _distributedCache;
         private readonly IConnectionMultiplexer _redis;
-        
+        private readonly ILogger<FinanciallaunchRespository> _logger;
 
-        public FinanciallaunchRespository(IConfiguration configuration, IDistributedCache distributedCache, IConnectionMultiplexer redis)
+
+
+        public FinanciallaunchRespository(IConfiguration configuration, IDistributedCache distributedCache, IConnectionMultiplexer redis, ILogger<FinanciallaunchRespository> logger)
         {
             _configuration = configuration;
             _distributedCache = distributedCache;
             _redis = redis;
+            _logger = logger;
         }
         public async Task<decimal> GetAsync()
         {
@@ -40,7 +44,7 @@ namespace Financial.Infra
             else
             {
                 return 0.0m;
-            }            
+            }
         }
 
         public async Task SaveAsync(decimal value)
@@ -50,6 +54,8 @@ namespace Financial.Infra
 
             try
             {
+                _logger.LogInformation($"FinanciallaunchRespository: SaveAsync: Value: {value}");
+
                 await db.StringIncrementAsync(key, (long)(value * 100));
             }
             catch (Exception ex)
