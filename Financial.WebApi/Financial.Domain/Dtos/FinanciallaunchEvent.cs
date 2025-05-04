@@ -7,7 +7,7 @@ namespace Financial.Domain.Dtos
         public FinanciallaunchEvent(Financiallaunch entity)
         {
             this.Entity = entity;
-            this.Idempotency = entity.IdempotencyKey;
+            this.Idempotency = entity.IdempotencyKey.ToString();
             this.Date = DateTime.UtcNow;
         }
     }

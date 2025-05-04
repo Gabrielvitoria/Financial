@@ -27,7 +27,7 @@ namespace Financial.Tests
         [Description("Deve Instanciar Financial launch")]
         public void DeveInstanciarFinanciallaunch()
         {
-            var idempotencyKey = $"Financiallaunch_Revenue_Cash_100_453262_Nome novo de Customer_UNIQUESUFFIX";
+            var idempotencyKey = Guid.NewGuid().ToString();
 
             var financiallaunchDto = new CreateFinanciallaunchDto
             {
@@ -43,17 +43,16 @@ namespace Financial.Tests
 
             };
 
-
             var entity = new Financiallaunch(financiallaunchDto);
 
-            Assert.True(entity.IdempotencyKeyValid);
+            Assert.True(entity.IdempotencyKey != Guid.Empty);
         }
 
         [Fact]
         [Description("Deve invalidar Instanciar Financial launch com mesmo IdempotencyKey")]
         public void DeveInvalidarInstanciarFinanciallaunchIdempotencyKey()
         {
-            var idempotencyKey1 = $"Financiallaunch_Revenue_Cash_100_453262_Nome novo de Customer_UNIQUESUFFIX";
+            var idempotencyKey1 = Guid.NewGuid().ToString();
 
             var financiallaunchDto1 = new CreateFinanciallaunchDto
             {
@@ -69,7 +68,7 @@ namespace Financial.Tests
 
             };
 
-            var idempotencyKey2 = $"Financiallaunch_Revenue_Cash_100_453262_Nome novo de Customer_UNIQUESUFFIX";
+            var idempotencyKey2 = Guid.NewGuid().ToString();
 
             var financiallaunchDto2 = new CreateFinanciallaunchDto
             {
@@ -90,7 +89,7 @@ namespace Financial.Tests
             var entity2 = new Financiallaunch(financiallaunchDto2);
 
 
-            Assert.True(entity1.GetIdempotencyKey != entity2.GetIdempotencyKey);
+            Assert.True(entity1.IdempotencyKey != entity2.IdempotencyKey);
         }
 
         [Fact]
@@ -134,8 +133,10 @@ namespace Financial.Tests
             var entity2 = new Financiallaunch(financiallaunchDto2);
 
 
-            Assert.False(entity1.IdempotencyKeyValid);
-            Assert.False(entity2.IdempotencyKeyValid);
+            Assert.False(financiallaunchDto2.IdempotencyKeyValid);
+            Assert.False(financiallaunchDto2.IdempotencyKeyValid);
+            Assert.True(entity1.IdempotencyKey == Guid.Empty);
+            Assert.True(entity2.IdempotencyKey == Guid.Empty);
         }
 
         [Fact]
@@ -143,7 +144,7 @@ namespace Financial.Tests
         public async Task DeveProcessarAcriacaoDeUmNovolancamento()
         {
             // Arrange
-            var idempotencyKey = $"Financiallaunch_Revenue_Cash_100_453262_Nome novo de Customer_UNIQUESUFFIX";
+            var idempotencyKey = Guid.NewGuid().ToString();
 
             var financiallaunchDto = new CreateFinanciallaunchDto
             {
@@ -171,7 +172,7 @@ namespace Financial.Tests
             // Assert
             Assert.NotNull(result);
             Assert.Equal(financialLaunch.Id, result.Id);
-            Assert.Equal(financialLaunch.IdempotencyKey, result.IdempotencyKey);
+            Assert.Equal(financialLaunch.IdempotencyKey.ToString(), result.IdempotencyKey);
             Assert.Equal(financialLaunch.LaunchType, result.LaunchType);
             Assert.Equal(financialLaunch.PaymentMethod, result.PaymentMethod);
             Assert.Equal(financialLaunch.CoinType, result.CoinType);

@@ -14,7 +14,7 @@ namespace Financial.Domain.Maps
                 CostCenter = entity.CostCenter,
                 CreateDate = entity.CreateDate,
                 Description = entity.Description,
-                IdempotencyKey = entity.IdempotencyKey,
+                IdempotencyKey = entity.IdempotencyKey.ToString(),
                 LaunchType = entity.LaunchType,
                 NameCustomerSupplier = entity.NameCustomerSupplier,
                 PaymentMethod = entity.PaymentMethod,

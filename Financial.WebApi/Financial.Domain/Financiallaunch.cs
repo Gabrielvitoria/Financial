@@ -11,8 +11,10 @@ namespace Financial.Domain
         }
         public Financiallaunch(CreateFinanciallaunchDto createFinanciallaunchDto)
         {
+            if (!createFinanciallaunchDto.IdempotencyKeyValid) return;
+
             Id = Guid.CreateVersion7();
-            IdempotencyKey = createFinanciallaunchDto.IdempotencyKey;
+            IdempotencyKey = new Guid(createFinanciallaunchDto.IdempotencyKey);
             LaunchType = createFinanciallaunchDto.LaunchType;
             PaymentMethod = createFinanciallaunchDto.PaymentMethod;
             Status = launchStatusEnum.Open;
@@ -25,7 +27,7 @@ namespace Financial.Domain
             CreateDate = DateTime.UtcNow;
         }
 
-        public string IdempotencyKey { get; private set; }
+        public Guid IdempotencyKey { get; private set; }
         public launchTypeEnum LaunchType { get; private set; }
         public launchPaymentMethodEnum PaymentMethod { get; private set; }
         public launchStatusEnum Status { get; private set; }
@@ -48,13 +50,6 @@ namespace Financial.Domain
             this.Status = launchStatusEnum.PaidOff;
             this.Description += " Paid off." ;
             this.AlterDate = DateTime.Now;
-        }
-
-        [NotMapped]
-        public bool IdempotencyKeyValid => this.IdempotencyKey.Equals(this.GetIdempotencyKey);
-
-        [NotMapped]
-        public string GetIdempotencyKey => $"{nameof(Financiallaunch)}_{this.LaunchType}_{this.PaymentMethod}_{this.Value.ToString()}_{this.BankAccount}_{this.NameCustomerSupplier}_UNIQUESUFFIX";
-
+        }    
     }
 }
