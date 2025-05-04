@@ -3,7 +3,7 @@ services:
     image: financial-image-app
     container_name: financial-app
     build:
-      context: .
+      context:  /Financial.WebApi
       dockerfile: Dockerfile
     depends_on: 
       - database
@@ -13,20 +13,21 @@ services:
     environment: 
       - DBHOST=database
       - ASPNETCORE_ENVIRONMENT=Docker
-  # api-report:
-  #   image: financial-report-image-app
-  #   container_name: financial-report-app
-  #   build:
-  #     context: .
-  #     dockerfile: Dockerfile
-  #   depends_on: 
-  #     - rabbitmq
-  #   ports:
-  #     - "44368:8081" # HTTP mapping
-  #   restart: always
-  #   environment: 
-  #     - DBHOST=databaserabbitmq
-  #     - ASPNETCORE_ENVIRONMENT=Docker      
+  api-report:
+    image: financial-report-image-app
+    container_name: financial-report-app
+    build:
+      context: /Financial.Report
+      dockerfile: Dockerfile
+    depends_on: 
+      - rabbitmq
+      - redis
+    ports:
+      - "44368:8081" # HTTP mapping
+    restart: always
+    environment: 
+      - DBHOST=databaserabbitmq
+      - ASPNETCORE_ENVIRONMENT=Docker      
   database:
     image: postgres
     container_name: postgres

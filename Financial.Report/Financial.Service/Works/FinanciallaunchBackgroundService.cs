@@ -51,11 +51,13 @@ namespace Financial.Service.Works
                  catch (Exception ex)
                  {
                      _logger.LogError($"Error processing message: {ex.Message}");
-                    await _channel.BasicNackAsync(deliveryTag: ea.DeliveryTag, multiple: false, requeue: true); // Nack and requeue
+                     await _channel.BasicNackAsync(deliveryTag: ea.DeliveryTag, multiple: false, requeue: true); // Nack and requeue
                  }
              };
 
-             await _channel.BasicConsumeAsync(queue: _configuration["ConnectionQueueMenssage:QueueName"], autoAck: false, consumer: consumer);
+            _logger.LogInformation($"ConnectionQueueMenssage:QueueName: {_configuration["ConnectionQueueMenssage:QueueName"]}");
+
+            await _channel.BasicConsumeAsync(queue: _configuration["ConnectionQueueMenssage:QueueName"], autoAck: false, consumer: consumer);
 
             while (!stoppingToken.IsCancellationRequested)
             {

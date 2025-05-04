@@ -20,8 +20,8 @@
       "commandName": "Docker",
       "launchUrl": "https://localhost:44346/scalar/v1",
       "environmentVariables": {
-        "ASPNETCORE_HTTPS_PORTS": "8081",
-        "ASPNETCORE_HTTP_PORTS": "8080",
+        "ASPNETCORE_HTTPS_PORTS": "44399",
+        "ASPNETCORE_HTTP_PORTS": "8081",
         "ASPNETCORE_ENVIRONMENT": "Docker"
       },
       "publishAllPorts": true,
