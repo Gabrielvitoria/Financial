@@ -71,7 +71,11 @@ using (var scope = app.Services.CreateAsyncScope())
 
 
 app.MapOpenApi();
-app.MapScalarApiReference();
+app.MapScalarApiReference(o =>
+                          o.WithTitle("Financial API")
+                           .WithTheme(ScalarTheme.BluePlanet)
+
+);
 
 
 app.UseHttpsRedirection();

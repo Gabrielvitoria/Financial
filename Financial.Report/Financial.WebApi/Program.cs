@@ -72,7 +72,12 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 
 app.MapOpenApi();
-app.MapScalarApiReference();
+
+app.MapScalarApiReference(o =>
+                          o.WithTitle("Financial Report API")
+                           .WithTheme(ScalarTheme.BluePlanet)
+                          
+);
 
 
 app.UseHttpsRedirection();
