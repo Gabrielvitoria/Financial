@@ -16,6 +16,7 @@ namespace Financial.WebApi.Controllers
         }
 
         [HttpGet]
+        [Route("DailyBalance")]
         public async Task<IActionResult> GetAsync()
         {
             try

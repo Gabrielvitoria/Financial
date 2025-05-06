@@ -19,6 +19,7 @@
     <ProjectReference Include="..\Financial.Domain\Financial.Domain.csproj" />
     <ProjectReference Include="..\Financial.Infra\Financial.Infra.csproj" />
     <ProjectReference Include="..\Financial.Service\Financial.Service.csproj" />
+    <ProjectReference Include="..\Financial.WebApi\Financial.WebApi.csproj" />
   </ItemGroup>
 
   <ItemGroup>
