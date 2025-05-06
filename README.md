@@ -85,7 +85,7 @@ Essa arquitetura para o controle de fluxo de caixa diário utiliza um padrão de
 \[Seção com possíveis melhorias e expansões do sistema.\]
 
 ## 10\. Documentação das API
-*  A solução utiliza **SCALAR:** que Fornecer uma documentação das API de maneira padronizada. Scalar - Document, Test & Discover APIs
+*  A solução utiliza **SCALAR** que fornece uma documentação das API de maneira padronizada. Scalar - Document, Test & Discover APIs
 Derivado de um arquivo Swagger ou OpenAPI Specification, o Scalar é uma solução que constrói documentações de API ricas em detalhes de forma automatizada. Sua proposta é oferecer uma experiência intuitiva e eficaz, capacitando desenvolvedores a gerar documentações abrangentes que explicitam endpoints, parâmetros, respostas e ilustrações de uso em múltiplos contextos de programação.
 Exemplo da solução utilizando:
 <img src="https://github.com/Gabrielvitoria/Financial/blob/master/Documentacao/print_lancamentos_api_scalar.png?raw=true">
