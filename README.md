@@ -106,14 +106,14 @@ docker-compose up -d --build
 
 Tem disponível dois usuários:
 ```bash
-Com Roler de "gerente"
+Roles: "gerente"
 
 user: master
 password: master
 ```
 
 ```bash
-Com Roler de "usuario"
+Roles: "usuario"
 user: basic
 password: basic
 ```
