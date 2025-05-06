@@ -9,7 +9,7 @@ Essa arquitetura para o controle de fluxo de caixa diário utiliza um padrão de
 
 ## 2\. Diagrama de Arquitetura
 
-
+<img src="https://github.com/Gabrielvitoria/Financial/blob/master/Documentacao/DIagrama_servico_financeiro-Fluxograma.drawio.svg">
 
 
 ## 3\. Componentes da Arquitetura 🛬
