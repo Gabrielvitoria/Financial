@@ -32,11 +32,11 @@ namespace Financial.WebApi.Controllers
             }
             catch (ApplicationException aex)
             {
-                return NotFound(aex.Message);
+                return BadRequest(aex.Message);
             }
             catch (Exception ex)
             {
-                return NotFound(ex.Message);
+                return new BadRequestResult();
 
             }
         }
