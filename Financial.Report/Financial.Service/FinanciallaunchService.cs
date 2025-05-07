@@ -1,4 +1,5 @@
 ﻿using Financial.Common;
+using Financial.Domain.Dtos;
 using Financial.Infra.Interfaces;
 using Financial.Service.Interfaces;
 using Financial.Service.Works;
@@ -30,7 +31,9 @@ namespace Financial.Service
 
                 _logger.LogInformation($"FinanciallaunchService: FinanciallaunchEvent.Value: {financiallaunchEvent.Entity.Value}", financiallaunchEvent.Entity.Value);
 
-                await _financiallaunchRespository.SaveAsync(financiallaunchEvent.Entity.Value);
+                await _financiallaunchRespository.SaveBalanceAsync(financiallaunchEvent.Entity.Value);
+
+                await _financiallaunchRespository.SaveLauchAsync(financiallaunchEvent.Entity);
             }
             catch (Exception ex)
             {
@@ -38,11 +41,11 @@ namespace Financial.Service
             }
         }
 
-        public async Task<string> GetSaldoDiarioAsync()
+        public async Task<string> GetDayBalanceAsync()
         {
             try
             {
-                var saldo = await _financiallaunchRespository.GetAsync();
+                var saldo = await _financiallaunchRespository.GetBalanceAsync();
 
                 return saldo.ToString("0.00", CultureInfo.InvariantCulture);
             }
@@ -51,6 +54,19 @@ namespace Financial.Service
                 throw ex;
             }
         }
+
+        public async Task<List<FinanciallaunchDto>> GetDayLauchAsync()
+        {
+            try
+            {
+               return await _financiallaunchRespository.GetLauchAsync();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
 
         public string FormatSaldo(long saldoFromRedis)
         {

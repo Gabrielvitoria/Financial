@@ -41,7 +41,7 @@ namespace Financial.Domain
         public void Cancel(string? description = null)
         {
             this.Status = launchStatusEnum.Canceled;
-            this.Description += description ??  " Cancel: " + description;
+            this.Description += " [Cancel]: " + description;
             this.AlterDate = DateTime.Now;
         }
 

@@ -28,5 +28,12 @@ namespace Financial.Infra.Repositories
         {
             return await _context.Financiallaunch.AsNoTracking().FirstOrDefaultAsync(x => x.IdempotencyKey.Equals(new Guid(idempotencyKey)));
         }
+
+        public async Task<Financiallaunch> UpdateAsync(Financiallaunch launch)
+        {
+            _context.Financiallaunch.Update(launch);
+            await _context.SaveChangesAsync();
+            return launch;
+        }
     }
 }

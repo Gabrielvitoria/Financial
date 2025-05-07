@@ -1,9 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Financial.Domain.Dtos
 {
-    public class AlterFinanciallaunchDto : DtoBase
+    public class FinanciallaunchDto : DtoBase
     {
         [Required]
         public string IdempotencyKey { get; set; }
@@ -14,6 +13,8 @@ namespace Financial.Domain.Dtos
         [Required]
         public launchPaymentMethodEnum PaymentMethod { get; set; }
 
+        [Required]
+        public launchStatusEnum Status { get; set; }
 
         [Required]
         public string CoinType { get; set; }
@@ -32,21 +33,5 @@ namespace Financial.Domain.Dtos
 
         public string Description { get; set; }
 
-        [NotMapped]
-        public bool IdempotencyKeyValid
-        {
-            get
-            {
-
-                Guid parsedGuid;
-
-                if (Guid.TryParse(IdempotencyKey, out parsedGuid))
-                {
-                    return true;
-                }
-
-                return false;
-            }
-        }
     }
 }

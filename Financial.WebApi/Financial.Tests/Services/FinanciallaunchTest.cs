@@ -7,7 +7,7 @@ using Moq;
 using System.ComponentModel;
 using System.Diagnostics;
 
-namespace Financial.Tests
+namespace Financial.Tests.Services
 {
     public class FinanciallaunchTest
     {
@@ -32,8 +32,8 @@ namespace Financial.Tests
             var financiallaunchDto = new CreateFinanciallaunchDto
             {
                 IdempotencyKey = idempotencyKey,
-                LaunchType = Domain.launchTypeEnum.Revenue,
-                PaymentMethod = Domain.launchPaymentMethodEnum.Cash,
+                LaunchType = launchTypeEnum.Revenue,
+                PaymentMethod = launchPaymentMethodEnum.Cash,
                 CoinType = "USD",
                 Value = 100,
                 BankAccount = "453262",
@@ -57,8 +57,8 @@ namespace Financial.Tests
             var financiallaunchDto1 = new CreateFinanciallaunchDto
             {
                 IdempotencyKey = idempotencyKey1,
-                LaunchType = Domain.launchTypeEnum.Revenue,
-                PaymentMethod = Domain.launchPaymentMethodEnum.Cash,
+                LaunchType = launchTypeEnum.Revenue,
+                PaymentMethod = launchPaymentMethodEnum.Cash,
                 CoinType = "USD",
                 Value = 100,
                 BankAccount = "453262",
@@ -73,8 +73,8 @@ namespace Financial.Tests
             var financiallaunchDto2 = new CreateFinanciallaunchDto
             {
                 IdempotencyKey = idempotencyKey2,
-                LaunchType = Domain.launchTypeEnum.Revenue,
-                PaymentMethod = Domain.launchPaymentMethodEnum.Cash,
+                LaunchType = launchTypeEnum.Revenue,
+                PaymentMethod = launchPaymentMethodEnum.Cash,
                 CoinType = "USD",
                 Value = 100.01m,
                 BankAccount = "453262",
@@ -101,8 +101,8 @@ namespace Financial.Tests
             var financiallaunchDto1 = new CreateFinanciallaunchDto
             {
                 IdempotencyKey = idempotencyKey1,
-                LaunchType = Domain.launchTypeEnum.Revenue,
-                PaymentMethod = Domain.launchPaymentMethodEnum.Cash,
+                LaunchType = launchTypeEnum.Revenue,
+                PaymentMethod = launchPaymentMethodEnum.Cash,
                 CoinType = "USD",
                 Value = 100,
                 BankAccount = "453262",
@@ -117,8 +117,8 @@ namespace Financial.Tests
             var financiallaunchDto2 = new CreateFinanciallaunchDto
             {
                 IdempotencyKey = idempotencyKey2,
-                LaunchType = Domain.launchTypeEnum.Revenue,
-                PaymentMethod = Domain.launchPaymentMethodEnum.Cash,
+                LaunchType = launchTypeEnum.Revenue,
+                PaymentMethod = launchPaymentMethodEnum.Cash,
                 CoinType = "USD",
                 Value = 100.01m,
                 BankAccount = "453262",
@@ -149,8 +149,8 @@ namespace Financial.Tests
             var financiallaunchDto = new CreateFinanciallaunchDto
             {
                 IdempotencyKey = idempotencyKey,
-                LaunchType = Domain.launchTypeEnum.Revenue,
-                PaymentMethod = Domain.launchPaymentMethodEnum.Cash,
+                LaunchType = launchTypeEnum.Revenue,
+                PaymentMethod = launchPaymentMethodEnum.Cash,
                 CoinType = "USD",
                 Value = 100,
                 BankAccount = "453262",
@@ -212,6 +212,58 @@ namespace Financial.Tests
             Assert.Equal("Error: Check if the data is correct. Some information that makes up the Idempotency is incorrect or does not match the idempotency", exception.Message);
 
             _processLaunchRepositoryMock.Verify(repo => repo.CreateAsync(It.IsAny<Financiallaunch>()), Times.Never);
+        }
+
+
+        [Fact]
+        [Description("Deve processar o cancelamento de um lançamento existente")]
+        public async Task DeveProcessarOCancelamentoDeUmLancamentoExistente()
+        {
+            // Arrange
+   
+            var cancelDescription = "Cancelamento de teste";
+            var existingLaunchDto = new CreateFinanciallaunchDto
+            {
+                IdempotencyKey = Guid.NewGuid().ToString().ToUpper(), // Garante uma chave válida
+                LaunchType = launchTypeEnum.Revenue,
+                PaymentMethod = launchPaymentMethodEnum.Card,
+                CoinType = "BRL",
+                Value = 150.00m,
+                BankAccount = "1234-5",
+                NameCustomerSupplier = "Cliente Teste",
+                CostCenter = "Vendas",
+                Description = "Lançamento inicial"
+            };
+            var existingLaunch = new Financiallaunch(existingLaunchDto); // Instancia a entidade corretamente
+
+            var expectedDto = new FinanciallaunchDto
+            {
+                Id = existingLaunch.Id,
+                Value = 150.00m,
+                Description = "Lançamento inicial",
+                Status = launchStatusEnum.Canceled,
+                IdempotencyKey = existingLaunch.IdempotencyKey.ToString()
+            };
+            var cancelDto = new CancelFinanciallaunchDto { Id = existingLaunch.Id, Description = cancelDescription };
+
+            _processLaunchRepositoryMock.Setup(repo => repo.GetAsync(existingLaunch.Id)).ReturnsAsync(existingLaunch);
+            _processLaunchRepositoryMock.Setup(repo => repo.UpdateAsync(It.IsAny<Financiallaunch>()))
+                                        .ReturnsAsync(existingLaunch);
+
+            // Act
+            var result = await _processLaunchservice.ProcessCancelLaunchAsync(cancelDto);
+
+            // Assert
+            // Assert
+            Assert.NotNull(result);
+            Assert.Equal(expectedDto.Id, result.Id);
+            Assert.Equal(expectedDto.Status, result.Status);
+            Assert.Contains("Cancel", result.Description);
+            Assert.Equal(expectedDto.IdempotencyKey, result.IdempotencyKey);
+
+            _processLaunchRepositoryMock.Verify(repo => repo.GetAsync(existingLaunch.Id), Times.Once);
+            _processLaunchRepositoryMock.Verify(repo => repo.UpdateAsync(It.IsAny<Financiallaunch>()), Times.Once);
+         
         }
     }
 }

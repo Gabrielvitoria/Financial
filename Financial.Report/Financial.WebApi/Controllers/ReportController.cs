@@ -17,11 +17,11 @@ namespace Financial.WebApi.Controllers
 
         [HttpGet]
         [Route("DailyBalance")]
-        public async Task<IActionResult> GetAsync()
+        public async Task<IActionResult> GetBalanceAsync()
         {
             try
             {
-                return Ok(await _financiallaunchService.GetSaldoDiarioAsync());
+                return Ok(await _financiallaunchService.GetDayBalanceAsync());
             }
             catch (ApplicationException aex)
             {
@@ -33,6 +33,23 @@ namespace Financial.WebApi.Controllers
             }
         }
 
+        [HttpGet]
+        [Route("DailyLauch")]
+        public async Task<IActionResult> GetLauchAsync()
+        {
+            try
+            {
+                return Ok(await _financiallaunchService.GetDayBalanceAsync());
+            }
+            catch (ApplicationException aex)
+            {
+                return NotFound(aex.Message);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
 
     }
 }

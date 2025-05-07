@@ -54,9 +54,20 @@ namespace Financial.Service
                 throw ex;
             }
         }
-        public Task<FinanciallaunchDto> ProcessCancelLaunchAsync(AlterFinanciallaunchDto alterFinanciallaunchDto)
+        public async Task<FinanciallaunchDto> ProcessCancelLaunchAsync(CancelFinanciallaunchDto cancelFinanciallaunchDto)
         {
-            throw new NotImplementedException();
+            if (cancelFinanciallaunchDto.Id == Guid.Empty)
+            {
+                throw new ApplicationException($"Error: Check if the data is correct. Some information that makes up the Id is incorrect or does not match the ID");
+            }
+
+            var launchExist = await _processLaunchRepository.GetAsync(cancelFinanciallaunchDto.Id);
+
+            launchExist.Cancel(cancelFinanciallaunchDto.Description);
+
+            var launch = await _processLaunchRepository.UpdateAsync(launchExist);
+
+            return launch.MapToDto();
         }
 
         public Task<FinanciallaunchDto> ProcessEditLaunchAsync(AlterFinanciallaunchDto alterFinanciallaunchDto)

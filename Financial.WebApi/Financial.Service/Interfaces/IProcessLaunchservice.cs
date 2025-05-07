@@ -10,7 +10,7 @@ namespace Financial.Service.Interfaces
 
         Task<FinanciallaunchDto> ProcessPayLaunchAsync(AlterFinanciallaunchDto alterFinanciallaunchDto);
 
-        Task<FinanciallaunchDto> ProcessCancelLaunchAsync(AlterFinanciallaunchDto alterFinanciallaunchDto);
+        Task<FinanciallaunchDto> ProcessCancelLaunchAsync(CancelFinanciallaunchDto alterFinanciallaunchDto);
 
     }
 }

@@ -1,9 +1,11 @@
-﻿using Financial.Infra.Interfaces;
+﻿using Financial.Domain.Dtos;
+using Financial.Domain.Events;
+using Financial.Infra.Interfaces;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using StackExchange.Redis;
-using System.Globalization;
+using System.Text.Json;
 
 namespace Financial.Infra
 {
@@ -23,10 +25,10 @@ namespace Financial.Infra
             _redis = redis;
             _logger = logger;
         }
-        public async Task<decimal> GetAsync()
+        public async Task<decimal> GetBalanceAsync()
         {
             var db = _redis.GetDatabase();
-            var key = GetRedisKey();
+            var key = GetRedisBalanceKey();
 
             var result = await db.StringGetAsync(key);
 
@@ -47,14 +49,14 @@ namespace Financial.Infra
             }
         }
 
-        public async Task SaveAsync(decimal value)
+         public async Task SaveBalanceAsync(decimal value)
         {
             var db = _redis.GetDatabase();
-            var key = GetRedisKey();
+            var key = GetRedisBalanceKey();
 
             try
             {
-                _logger.LogInformation($"FinanciallaunchRespository: SaveAsync: Value: {value}");
+                _logger.LogInformation($"FinanciallaunchRespository: SaveBalanceAsync: Value: {value}");
 
                 await db.StringIncrementAsync(key, (long)(value * 100));
             }
@@ -64,12 +66,73 @@ namespace Financial.Infra
             }
         }
 
-        private string GetRedisKey()
+        public async Task SaveLauchAsync(Financiallaunch value)
         {
-            var date = DateTime.UtcNow;
-            return date.ToString("yyyy-MM-dd");
+            var db = _redis.GetDatabase();
+            var key = GetRedisLauchKey();
+
+            try
+            {
+                _logger.LogInformation($"FinanciallaunchRespository: SaveLauchAsync: Value: {JsonSerializer.Serialize(value)}");
+
+                var existingLaunchesJson = await db.StringGetAsync(key);
+                var launches = new List<Financiallaunch>();
+
+                if (existingLaunchesJson.HasValue)
+                {
+                    launches = JsonSerializer.Deserialize<List<Financiallaunch>>(existingLaunchesJson);
+                }
+
+                launches.Add(value);
+
+                var updatedLaunchesJson = JsonSerializer.Serialize(launches);
+                await db.StringSetAsync(key, updatedLaunchesJson);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Erro ao salvar o lançamento no Redis.");
+                throw;
+            }
         }
 
+        public async Task<List<FinanciallaunchDto>> GetLauchAsync()
+        {
+            var db = _redis.GetDatabase();
+            var key = GetRedisLauchKey();
+
+            try
+            {
+                _logger.LogInformation($"FinanciallaunchRespository: GetLauchAsync");
+
+                var existingLaunchesJson = await db.StringGetAsync(key);
+                
+                var launches = new List<FinanciallaunchDto>();
+
+                if (existingLaunchesJson.HasValue)
+                {
+                    launches = JsonSerializer.Deserialize<List<FinanciallaunchDto>>(existingLaunchesJson);
+                }
+
+                return launches;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Erro ao salvar o lançamento no Redis.");
+                throw;
+            }
+        }
+
+
+        private string GetRedisBalanceKey()
+        {
+            var date = DateTime.UtcNow;
+            return $"Balance_{date.ToString("yyyy-MM-dd")}";
+        }
+        private string GetRedisLauchKey()
+        {
+            var date = DateTime.UtcNow;
+            return $"Lauch_{date.ToString("yyyy-MM-dd")}";
+        }
 
     }
 }
