@@ -1,9 +1,11 @@
 ﻿using Financial.Domain;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Financial.Infra.MapEF
 {
+    [ExcludeFromCodeCoverage]
     public class FinancialConfiguration : IEntityTypeConfiguration<Financiallaunch>
     {
         public void Configure(EntityTypeBuilder<Financiallaunch> builder)

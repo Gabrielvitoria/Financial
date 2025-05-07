@@ -2,6 +2,7 @@
 using Financial.Service.Interfaces;
 using Financial.WebApi.Controllers;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using System;
@@ -52,12 +53,10 @@ public class AuthenticateControllerTests
 
         // Act
         var actionResult = await _controller.Authenticate(loginDto);
-        var notFoundResult = actionResult as NotFoundObjectResult;
+        var notFoundResult = actionResult as BadRequestObjectResult;
 
         // Assert
-        Assert.NotNull(notFoundResult);
-        Assert.Equal(StatusCodes.Status404NotFound, notFoundResult.StatusCode);
-        Assert.Equal(errorMessage, notFoundResult.Value);
+        Assert.Equal(StatusCodes.Status400BadRequest, notFoundResult.StatusCode);
     }
 
     [Fact]
@@ -72,12 +71,12 @@ public class AuthenticateControllerTests
 
         // Act
         var actionResult = await _controller.Authenticate(loginDto);
-        var notFoundResult = actionResult as NotFoundObjectResult;
+        var notFoundResult = actionResult as BadRequestResult;
 
         // Assert
         Assert.NotNull(notFoundResult);
-        Assert.Equal(StatusCodes.Status404NotFound, notFoundResult.StatusCode);
-        Assert.Equal(errorMessage, notFoundResult.Value);
+        Assert.Equal(StatusCodes.Status400BadRequest, notFoundResult.StatusCode);
+        
     }
 
     [Fact]

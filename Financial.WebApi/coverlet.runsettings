@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RunSettings>
+
+  <ModulePaths>
+    <Exclude>
+      <ModulePath>Program.cs</ModulePath>
+      <!-- Add more ModulePath nodes here. -->
+    </Exclude>
+  </ModulePaths> 
+
+</RunSettings>
+
+

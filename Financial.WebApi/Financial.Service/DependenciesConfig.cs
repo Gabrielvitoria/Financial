@@ -2,9 +2,11 @@
 using Financial.Infra.Repositories;
 using Financial.Service.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Financial.Service
 {
+    [ExcludeFromCodeCoverage]
     public static class DependenciesConfig
     {
 

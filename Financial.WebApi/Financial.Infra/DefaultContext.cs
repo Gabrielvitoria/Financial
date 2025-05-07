@@ -1,9 +1,11 @@
 ﻿using Financial.Domain;
 using Financial.Infra.MapEF;
 using Microsoft.EntityFrameworkCore;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Financial.Infra
 {
+    [ExcludeFromCodeCoverage]
     public class DefaultContext : DbContext
     {
         public DefaultContext(DbContextOptions options) : base(options)

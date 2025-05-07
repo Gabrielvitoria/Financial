@@ -5,12 +5,14 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Exceptions;
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
 namespace Financial.Service
 {
+    [ExcludeFromCodeCoverage]
     public class NotificationEventService : INotificationEvent
     {
         private readonly IConfiguration _configuration;

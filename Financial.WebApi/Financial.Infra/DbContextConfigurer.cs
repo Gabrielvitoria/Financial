@@ -2,9 +2,11 @@
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Financial.Infra
 {
+    [ExcludeFromCodeCoverage]
     public class DbContextConfigurer : IDesignTimeDbContextFactory<DefaultContext>
     {
         private readonly ILogger<DbContextConfigurer> _logger;
