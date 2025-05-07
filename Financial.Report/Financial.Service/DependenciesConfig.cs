@@ -41,6 +41,7 @@ namespace Financial.Service
         {
 
             services.AddHostedService<FinanciallaunchBackgroundService>();
+            services.AddHostedService<FinancialPayLaunchBackgroundService>();
 
 
             return services;

@@ -39,5 +39,23 @@ namespace Financial.WebApi.Controllers
             }
         }
 
+        [HttpPost]
+        [Route("Pay")]
+        public async Task<IActionResult> NewPayOfLaunchAsync([FromBody] PayFinanciallaunchDto payFinanciallaunchDto)
+        {
+            try
+            {
+                return Ok(await _processLaunchservice.ProcessPayLaunchAsync(payFinanciallaunchDto));
+            }
+            catch (ApplicationException aex)
+            {
+                return NotFound(aex.Message);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
     }
 }

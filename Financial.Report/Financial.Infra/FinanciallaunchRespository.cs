@@ -95,6 +95,45 @@ namespace Financial.Infra
             }
         }
 
+        public async Task UpdateLauchAsync(Financiallaunch value)
+        {
+            var db = _redis.GetDatabase();
+            var key = GetRedisLauchKey(value);
+
+            try
+            {
+                _logger.LogInformation($"FinanciallaunchRespository: SaveLauchAsync: Value: {JsonSerializer.Serialize(value)}");
+
+                var existingLaunchesJson = await db.StringGetAsync(key);
+                var launches = new List<Financiallaunch>();
+
+                if (existingLaunchesJson.HasValue)
+                {
+                    launches = JsonSerializer.Deserialize<List<Financiallaunch>>(existingLaunchesJson);
+                }
+
+
+                foreach (var item in launches)
+                {
+                    if(item.IdempotencyKey == value.IdempotencyKey)
+                    {
+                        item.Status = 2;
+
+                        break;
+                    }
+                }
+
+                var updatedLaunchesJson = JsonSerializer.Serialize(launches);
+                await db.StringSetAsync(key, updatedLaunchesJson);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Erro ao salvar o lançamento no Redis.");
+                throw;
+            }
+        }
+
+
         public async Task<List<FinanciallaunchDto>> GetLauchAsync()
         {
             var db = _redis.GetDatabase();
@@ -128,9 +167,9 @@ namespace Financial.Infra
             var date = DateTime.UtcNow;
             return $"Balance_{date.ToString("yyyy-MM-dd")}";
         }
-        private string GetRedisLauchKey()
+        private string GetRedisLauchKey(Financiallaunch? financiallaunch = null)
         {
-            var date = DateTime.UtcNow;
+            var date = financiallaunch != null ? financiallaunch.CreateDate : DateTime.UtcNow;
             return $"Lauch_{date.ToString("yyyy-MM-dd")}";
         }
 

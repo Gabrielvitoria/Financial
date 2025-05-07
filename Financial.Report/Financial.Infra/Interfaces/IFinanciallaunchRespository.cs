@@ -11,5 +11,7 @@ namespace Financial.Infra.Interfaces
         Task<List<FinanciallaunchDto>> GetLauchAsync();
 
         Task SaveLauchAsync(Financiallaunch value);
+
+        Task UpdateLauchAsync(Financiallaunch value);
     }
 }

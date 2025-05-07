@@ -45,6 +45,31 @@ namespace Financial.Service
             }
         }
 
+
+        public async Task ProcessesPayFinancialLauchAsync(FinanciallaunchEvent financiallaunchEvent)
+        {
+            try
+            {
+                if (financiallaunchEvent == null || financiallaunchEvent.Entity == null || financiallaunchEvent.Entity.Value == 0)
+                {
+                    _logger.LogWarning("FinanciallaunchService: FinanciallaunchEvent is null or has no value.");
+                    return;
+                }
+
+                _logger.LogInformation($"FinanciallaunchService: FinanciallaunchEvent.Value: {financiallaunchEvent.Entity.Value}", financiallaunchEvent.Entity.Value);
+                              
+
+                await _financiallaunchRespository.UpdateLauchAsync(financiallaunchEvent.Entity);
+
+                await _financiallaunchRespository.SaveBalanceAsync(financiallaunchEvent.Entity.Value);
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public async Task<string> GetDayBalanceAsync()
         {
             try
@@ -70,21 +95,6 @@ namespace Financial.Service
                 throw ex;
             }
         }
-
-
-        public string FormatSaldo(long saldoFromRedis)
-        {
-            if (saldoFromRedis == 0)
-            {
-                return "0.00";
-            }
-
-            decimal saldoDecimal = saldoFromRedis / 1000m;
-            return saldoDecimal.ToString("0.00", CultureInfo.InvariantCulture);
-
-        }
-
-
 
     }
 }

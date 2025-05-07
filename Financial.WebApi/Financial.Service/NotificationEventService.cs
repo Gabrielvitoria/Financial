@@ -28,7 +28,7 @@ namespace Financial.Service
         {
             try
             {
-                var config = GetConfig("QueueName");
+                var config = GetConfig("QueueName", "RoutingKey");
                 //var factory = GetConnectionFactory(config);
                 // Cria uma conexão com o RabbitMQ
                 using var connection = await _connectionFactoryWrapper.CreateConnectionAsync(config);   
@@ -66,9 +66,8 @@ namespace Financial.Service
         {
             try
             {
-                var config = GetConfig("QueueCancel");
-                var factory = GetConnectionFactory(config);
-                using var connection = await factory.CreateConnectionAsync();
+                var config = GetConfig("QueueCancel", "RoutingKeyCancel");
+                using var connection = await _connectionFactoryWrapper.CreateConnectionAsync(config);
                 using var channel = await connection.CreateChannelAsync();
 
                 await channel.QueueDeclareAsync(queue: config.QueueName, durable: false, exclusive: false, autoDelete: false, arguments: null);
@@ -106,9 +105,9 @@ namespace Financial.Service
         {
             try
             {
-                var config = GetConfig("QueuePaid");
-                var factory = GetConnectionFactory(config);
-                using var connection = await factory.CreateConnectionAsync();
+  
+                var config = GetConfig("QueuePaid", "RoutingKeyPaid");
+                using var connection = await _connectionFactoryWrapper.CreateConnectionAsync(config);
                 using var channel = await connection.CreateChannelAsync();
 
                 await channel.QueueDeclareAsync(queue: config.QueueName, durable: false, exclusive: false, autoDelete: false, arguments: null);
@@ -155,7 +154,7 @@ namespace Financial.Service
         }
 
 
-        private ConnectionQueueMenssage GetConfig(string queueName)
+        private ConnectionQueueMenssage GetConfig(string queueName, string routingKeyPaid)
         {
             var config = new ConnectionQueueMenssage
             {
@@ -166,7 +165,7 @@ namespace Financial.Service
                 VirtualHost = _configuration["ConnectionQueueMenssage:VirtualHost"],
                 QueueName = _configuration[$"ConnectionQueueMenssage:{queueName}"],
                 ExchangeName = _configuration["ConnectionQueueMenssage:ExchangeName"],
-                RoutingKey = _configuration["ConnectionQueueMenssage:RoutingKey"]
+                RoutingKey = _configuration[$"ConnectionQueueMenssage:{routingKeyPaid}"]
             };
 
             return config;

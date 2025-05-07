@@ -38,6 +38,11 @@ namespace Financial.Service
                     return launchExist.MapToDto();
                 }
 
+                if (financialLaunchEntity.PaymentMethod == launchPaymentMethodEnum.Cash)
+                {
+                    financialLaunchEntity.PayOff();
+                }
+
                 var launch = await _processLaunchRepository.CreateAsync(financialLaunchEntity);
 
 

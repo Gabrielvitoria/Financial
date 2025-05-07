@@ -11,7 +11,7 @@ namespace Financial.Infra.Repositories
         {
             _context = context;
         }
-       
+
         public async Task<Financiallaunch> CreateAsync(Financiallaunch launch)
         {
             await _context.Financiallaunch.AddAsync(launch);
@@ -36,8 +36,12 @@ namespace Financial.Infra.Repositories
 
         public async Task<Financiallaunch> UpdateAsync(Financiallaunch launch)
         {
-            _context.Financiallaunch.Update(launch);
-            await _context.SaveChangesAsync();
+            await _context.Financiallaunch.Where(x => x.Id.Equals(launch.Id))
+                                          .ExecuteUpdateAsync(p => p.SetProperty(s => s.Status, launch.Status) 
+                                                                    .SetProperty(s=> s.AlterDate, launch.AlterDate)
+                                                                    .SetProperty(s=> s.Description, launch.Description)
+                                                                    
+                                                              );
             return launch;
         }
     }

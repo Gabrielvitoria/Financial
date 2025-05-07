@@ -39,7 +39,7 @@ namespace Financial.WebApi.Controllers
         {
             try
             {
-                return Ok(await _financiallaunchService.GetDayBalanceAsync());
+                return Ok(await _financiallaunchService.GetDayLauchAsync());
             }
             catch (ApplicationException aex)
             {
