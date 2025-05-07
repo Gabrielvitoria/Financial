@@ -12,7 +12,6 @@ using System.Text.Json.Serialization;
 
 namespace Financial.Service
 {
-    [ExcludeFromCodeCoverage]
     public class NotificationEventService : INotificationEvent
     {
         private readonly IConfiguration _configuration;
@@ -60,7 +59,7 @@ namespace Financial.Service
 
         private ConnectionFactory GetConnectionFactory(ConnectionQueueMenssage config)
         {
-      
+
             var factory = new ConnectionFactory
             {
                 HostName = config.HostName,

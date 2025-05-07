@@ -17,6 +17,8 @@ namespace Financial.Service
             _processLaunchRepository = processLaunchRepository;
             _notificationEvent = notificationEvent;
         }
+
+
         public async Task<FinanciallaunchDto> ProcessNewLaunchAsync(CreateFinanciallaunchDto createFinanciallaunchDto)
         {
             try
@@ -51,8 +53,19 @@ namespace Financial.Service
             {
                 throw ex;
             }
+        }
+        public Task<FinanciallaunchDto> ProcessCancelLaunchAsync(AlterFinanciallaunchDto alterFinanciallaunchDto)
+        {
+            throw new NotImplementedException();
+        }
 
-
+        public Task<FinanciallaunchDto> ProcessEditLaunchAsync(AlterFinanciallaunchDto alterFinanciallaunchDto)
+        {
+            throw new NotImplementedException();
+        }
+        public Task<FinanciallaunchDto> ProcessPayLaunchAsync(AlterFinanciallaunchDto alterFinanciallaunchDto)
+        {
+            throw new NotImplementedException();
         }
     }
 }
