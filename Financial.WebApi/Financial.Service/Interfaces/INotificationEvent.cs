@@ -5,6 +5,8 @@ namespace Financial.Service.Interfaces
 {
     public interface INotificationEvent
     {
-        Task SendAsync(FinanciallaunchEvent financiallaunchEvent);
+        Task<bool> SendAsync(FinanciallaunchEvent financiallaunchEvent);
+        Task<bool> SendCancelAsync(FinanciallaunchEvent financiallaunchEvent);
+        Task<bool> SendPaidAsync(FinanciallaunchEvent financiallaunchEvent);
     }
 }

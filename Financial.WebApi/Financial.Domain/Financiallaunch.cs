@@ -48,7 +48,7 @@ namespace Financial.Domain
         public void PayOff()
         {
             this.Status = launchStatusEnum.PaidOff;
-            this.Description += " Paid off." ;
+            this.Description += " [Paid off]: " + DateTime.Now;
             this.AlterDate = DateTime.Now;
         }    
     }

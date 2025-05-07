@@ -7,6 +7,7 @@ namespace Financial.Infra.Interfaces
         Task<Financiallaunch> CreateAsync(Financiallaunch launch);   
         Task<Financiallaunch> UpdateAsync(Financiallaunch launch);   
         Task<Financiallaunch> GetAsync(Guid launchId);
+        Task<Financiallaunch> GetByIdStatusOpenAsync(Guid launchId);
         Task<Financiallaunch> GetByIdempotencyKeyAsync(string idempotencyKey);
     }
 }

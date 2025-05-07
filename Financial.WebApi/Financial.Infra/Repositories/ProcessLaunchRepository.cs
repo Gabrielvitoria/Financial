@@ -24,6 +24,11 @@ namespace Financial.Infra.Repositories
             return await _context.Financiallaunch.AsNoTracking().FirstOrDefaultAsync(x => x.Id.Equals(launchId));
         }
 
+        public async Task<Financiallaunch> GetByIdStatusOpenAsync(Guid launchId)
+        {
+            return await _context.Financiallaunch.AsNoTracking().FirstOrDefaultAsync(x => x.Id.Equals(launchId) && x.Status == launchStatusEnum.Open);
+        }
+
         public async Task<Financiallaunch?> GetByIdempotencyKeyAsync(string idempotencyKey)
         {
             return await _context.Financiallaunch.AsNoTracking().FirstOrDefaultAsync(x => x.IdempotencyKey.Equals(new Guid(idempotencyKey)));

@@ -11,7 +11,8 @@ namespace Financial.Domain
     public enum launchPaymentMethodEnum
     {
         Cash = 1, // Dinheiro
-        Card = 2 // Cartão
+        Card = 2, // Cartão
+        Ticket = 3 // Boleto
     }
 
     public enum launchStatusEnum

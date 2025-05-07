@@ -216,15 +216,14 @@ namespace Financial.Tests.Services
 
 
         [Fact]
-        [Description("Deve processar o cancelamento de um lançamento existente")]
-        public async Task DeveProcessarOCancelamentoDeUmLancamentoExistente()
+        [Description("Deve processar o cancelamento de um lançamento existente com status 'Open'")]
+        public async Task DeveProcessarOCancelamentoDeUmLancamentoExistenteComStatusOpen()
         {
             // Arrange
-   
             var cancelDescription = "Cancelamento de teste";
             var existingLaunchDto = new CreateFinanciallaunchDto
             {
-                IdempotencyKey = Guid.NewGuid().ToString().ToUpper(), // Garante uma chave válida
+                IdempotencyKey = Guid.NewGuid().ToString(),
                 LaunchType = launchTypeEnum.Revenue,
                 PaymentMethod = launchPaymentMethodEnum.Card,
                 CoinType = "BRL",
@@ -234,7 +233,7 @@ namespace Financial.Tests.Services
                 CostCenter = "Vendas",
                 Description = "Lançamento inicial"
             };
-            var existingLaunch = new Financiallaunch(existingLaunchDto); // Instancia a entidade corretamente
+            var existingLaunch = new Financiallaunch(existingLaunchDto);
 
             var expectedDto = new FinanciallaunchDto
             {
@@ -246,7 +245,10 @@ namespace Financial.Tests.Services
             };
             var cancelDto = new CancelFinanciallaunchDto { Id = existingLaunch.Id, Description = cancelDescription };
 
+            _processLaunchRepositoryMock.Setup(repo => repo.GetByIdStatusOpenAsync(existingLaunch.Id)).ReturnsAsync(existingLaunch); // Simula que não existe um lançamento já cancelado com esse ID
+           
             _processLaunchRepositoryMock.Setup(repo => repo.GetAsync(existingLaunch.Id)).ReturnsAsync(existingLaunch);
+            
             _processLaunchRepositoryMock.Setup(repo => repo.UpdateAsync(It.IsAny<Financiallaunch>()))
                                         .ReturnsAsync(existingLaunch);
 
@@ -254,16 +256,215 @@ namespace Financial.Tests.Services
             var result = await _processLaunchservice.ProcessCancelLaunchAsync(cancelDto);
 
             // Assert
-            // Assert
             Assert.NotNull(result);
             Assert.Equal(expectedDto.Id, result.Id);
             Assert.Equal(expectedDto.Status, result.Status);
             Assert.Contains("Cancel", result.Description);
             Assert.Equal(expectedDto.IdempotencyKey, result.IdempotencyKey);
 
-            _processLaunchRepositoryMock.Verify(repo => repo.GetAsync(existingLaunch.Id), Times.Once);
-            _processLaunchRepositoryMock.Verify(repo => repo.UpdateAsync(It.IsAny<Financiallaunch>()), Times.Once);
-         
+            _processLaunchRepositoryMock.Verify(repo => repo.GetByIdStatusOpenAsync(existingLaunch.Id), Times.Once);
+            _processLaunchRepositoryMock.Verify(repo => repo.GetByIdStatusOpenAsync(existingLaunch.Id), Times.Once);
+            _processLaunchRepositoryMock.Verify(repo => repo.UpdateAsync(It.Is<Financiallaunch>(l =>
+                l.Id == existingLaunch.Id &&
+                l.Status == launchStatusEnum.Canceled
+            )), Times.Once);
+        }
+
+        [Fact]
+        [Description("Não Deve processar o cancelamento de um lançamento com ID vazio")]
+        public async Task NaoDeveProcessarOCancelamentoDeUmLancamentoComIdVazio()
+        {
+            // Arrange
+            var cancelDto = new CancelFinanciallaunchDto { Id = Guid.Empty, Description = "Cancelamento de teste" };
+
+            // Act
+            var exception = await Assert.ThrowsAsync<ApplicationException>(() => _processLaunchservice.ProcessCancelLaunchAsync(cancelDto));
+
+            // Assert
+            Assert.Equal("Error: Check if the data is correct. Some information that makes up the Id is incorrect or does not match the ID", exception.Message);
+
+            _processLaunchRepositoryMock.Verify(repo => repo.GetByIdStatusOpenAsync(It.IsAny<Guid>()), Times.Never);
+            _processLaunchRepositoryMock.Verify(repo => repo.GetAsync(It.IsAny<Guid>()), Times.Never);
+            _processLaunchRepositoryMock.Verify(repo => repo.UpdateAsync(It.IsAny<Financiallaunch>()), Times.Never);
+        }
+
+        [Fact]
+        [Description("Não Deve processar o cancelamento de um lançamento já cancelado")]
+        public async Task NaoDeveProcessarOCancelamentoDeUmLancamentoJaCancelado()
+        {
+            // Arrange
+  
+            var cancelDescription = "Tentativa de cancelamento";
+            var cancelDto = new CancelFinanciallaunchDto
+            {
+                Id = Guid.NewGuid(),
+                Description = "Lançamento original",
+            };
+
+            Financiallaunch existingLaunch; 
+
+            _processLaunchRepositoryMock.Setup(repo => repo.GetByIdStatusOpenAsync(It.IsAny<Guid>())).ReturnsAsync((Financiallaunch)null);
+
+            // Act
+            var exception = await Assert.ThrowsAsync<ApplicationException>(() => _processLaunchservice.ProcessCancelLaunchAsync(cancelDto));
+
+            // Assert
+            Assert.Equal("Info: The release cannot be canceled. Status other than \"Open\"", exception.Message);
+
+            _processLaunchRepositoryMock.Verify(repo => repo.GetByIdStatusOpenAsync(It.IsAny<Guid>()), Times.Once);
+            _processLaunchRepositoryMock.Verify(repo => repo.GetAsync(It.IsAny<Guid>()), Times.Never);
+            _processLaunchRepositoryMock.Verify(repo => repo.UpdateAsync(It.IsAny<Financiallaunch>()), Times.Never);
+        }
+
+        [Fact]
+        [Description("Não Deve processar o cancelamento de um lançamento inexistente")]
+        public async Task NaoDeveProcessarOCancelamentoDeUmLancamentoInexistente()
+        {
+            // Arrange
+            var launchId = Guid.NewGuid();
+            var cancelDto = new CancelFinanciallaunchDto { Id = launchId, Description = "Cancelamento de teste" };
+
+            _processLaunchRepositoryMock.Setup(repo => repo.GetByIdStatusOpenAsync(launchId)).ReturnsAsync((Financiallaunch)null);
+            _processLaunchRepositoryMock.Setup(repo => repo.GetAsync(launchId)).ReturnsAsync((Financiallaunch)null);
+
+            // Act
+            var exception = await Assert.ThrowsAsync<ApplicationException>(() => _processLaunchservice.ProcessCancelLaunchAsync(cancelDto));
+
+            // Assert
+            _processLaunchRepositoryMock.Verify(repo => repo.GetByIdStatusOpenAsync(launchId), Times.Once);
+            _processLaunchRepositoryMock.Verify(repo => repo.UpdateAsync(It.IsAny<Financiallaunch>()), Times.Never);
+        }
+
+
+        [Fact]
+        [Description("Deve processar o pagamento de um lançamento existente com status 'Open' e enviar notificação")]
+        public async Task DeveProcessarOPagamentoDeUmLancamentoExistenteComStatusOpenEEnviarNotificacao()
+        {
+            // Arrange
+
+            var existingLaunchDto = new CreateFinanciallaunchDto
+            {
+                IdempotencyKey = Guid.NewGuid().ToString().ToUpper(),
+                LaunchType = launchTypeEnum.Revenue,
+                PaymentMethod = launchPaymentMethodEnum.Card,
+                CoinType = "BRL",
+                Value = 150.00m,
+                BankAccount = "1234-5",
+                NameCustomerSupplier = "Cliente Teste",
+                CostCenter = "Vendas",
+                Description = "Lançamento inicial"
+            };
+            var existingLaunch = new Financiallaunch(existingLaunchDto);
+
+            var expectedDto = new FinanciallaunchDto
+            {
+                Id = existingLaunch.Id,
+                Value = 150.00m,
+                Description = "Lançamento inicial Paid off.",
+                Status = launchStatusEnum.PaidOff,
+                IdempotencyKey = existingLaunch.IdempotencyKey.ToString()
+            };
+            var payDto = new PayFinanciallaunchDto { Id = existingLaunch.Id };
+
+            _processLaunchRepositoryMock.Setup(repo => repo.GetByIdStatusOpenAsync(existingLaunch.Id)).ReturnsAsync(existingLaunch);
+            _processLaunchRepositoryMock.Setup(repo => repo.UpdateAsync(It.IsAny<Financiallaunch>()))
+                                        .ReturnsAsync(existingLaunch);
+
+            // Act
+            var result = await _processLaunchservice.ProcessPayLaunchAsync(payDto);
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.Equal(expectedDto.Id, result.Id);
+            Assert.Equal(expectedDto.Status, result.Status);
+            Assert.Contains("Paid", result.Description);
+            Assert.Equal(expectedDto.IdempotencyKey, result.IdempotencyKey);
+
+            _processLaunchRepositoryMock.Verify(repo => repo.GetByIdStatusOpenAsync(existingLaunch.Id), Times.Once);
+            _processLaunchRepositoryMock.Verify(repo => repo.UpdateAsync(It.Is<Financiallaunch>(l =>
+                l.Id == existingLaunch.Id &&
+                l.Status == launchStatusEnum.PaidOff
+            )), Times.Once);
+
+            _INotificationEvent.Verify(
+                notify => notify.SendAsync(It.Is<FinanciallaunchEvent>(e => e.Entity.Id == existingLaunch.Id)),
+                Times.Once
+            );
+        }
+
+        [Fact]
+        [Description("Não Deve processar o pagamento de um lançamento com ID vazio e não enviar notificação")]
+        public async Task NaoDeveProcessarOPagamentoDeUmLancamentoComIdVazioENaoEnviarNotificacao()
+        {
+            // Arrange
+            var payDto = new PayFinanciallaunchDto { Id = Guid.Empty };
+
+            // Act
+            var exception = await Assert.ThrowsAsync<ApplicationException>(() => _processLaunchservice.ProcessPayLaunchAsync(payDto));
+
+            // Assert
+            Assert.Equal("Error: Check if the data is correct. Some information that makes up the Id is incorrect or does not match the ID", exception.Message);
+
+            _processLaunchRepositoryMock.Verify(repo => repo.GetByIdStatusOpenAsync(It.IsAny<Guid>()), Times.Never);
+            _processLaunchRepositoryMock.Verify(repo => repo.UpdateAsync(It.IsAny<Financiallaunch>()), Times.Never);
+            _INotificationEvent.Verify(notify => notify.SendAsync(It.IsAny<FinanciallaunchEvent>()), Times.Never);
+        }
+
+        [Fact]
+        [Description("Não Deve processar o pagamento de um lançamento com status diferente de 'Open' e não enviar notificação")]
+        public async Task NaoDeveProcessarOPagamentoDeUmLancamentoComStatusDiferenteDeOpenENaoEnviarNotificacao()
+        {
+            // Arrange
+            var launchId = Guid.NewGuid();
+            var existingLaunchDto = new CreateFinanciallaunchDto
+            {
+                IdempotencyKey = Guid.NewGuid().ToString().ToUpper(),
+                LaunchType = launchTypeEnum.Revenue,
+                PaymentMethod = launchPaymentMethodEnum.Card,
+                CoinType = "BRL",
+                Value = 150.00m,
+                BankAccount = "1234-5",
+                NameCustomerSupplier = "Cliente Teste",
+                CostCenter = "Vendas",
+                Description = "Lançamento inicial",
+            };
+            var existingLaunch = new Financiallaunch(existingLaunchDto);
+            var payDto = new PayFinanciallaunchDto { Id = launchId };
+
+            _processLaunchRepositoryMock.Setup(repo => repo.GetByIdStatusOpenAsync(launchId)).ReturnsAsync((Financiallaunch)null);
+
+            // Act
+            var exception = await Assert.ThrowsAsync<ApplicationException>(() => _processLaunchservice.ProcessPayLaunchAsync(payDto));
+
+            // Assert
+            Assert.Equal("Info: The release cannot be canceled. Status other than \"Open\"", exception.Message);
+
+            _processLaunchRepositoryMock.Verify(repo => repo.GetByIdStatusOpenAsync(launchId), Times.Once);
+            _processLaunchRepositoryMock.Verify(repo => repo.UpdateAsync(It.IsAny<Financiallaunch>()), Times.Never);
+            _INotificationEvent.Verify(notify => notify.SendAsync(It.IsAny<FinanciallaunchEvent>()), Times.Never);
+        }
+
+        [Fact]
+        [Description("Não Deve processar o pagamento de um lançamento inexistente e não enviar notificação")]
+        public async Task NaoDeveProcessarOPagamentoDeUmLancamentoInexistenteENaoEnviarNotificacao()
+        {
+            // Arrange
+            var launchId = Guid.NewGuid();
+            var payDto = new PayFinanciallaunchDto { Id = launchId };
+
+            _processLaunchRepositoryMock.Setup(repo => repo.GetByIdStatusOpenAsync(launchId)).ReturnsAsync((Financiallaunch)null);
+
+            // Act
+            var exception = await Assert.ThrowsAsync<ApplicationException>(() => _processLaunchservice.ProcessPayLaunchAsync(payDto));
+
+            // Assert
+            Assert.Equal("Info: The release cannot be canceled. Status other than \"Open\"", exception.Message);
+
+            _processLaunchRepositoryMock.Verify(repo => repo.GetByIdStatusOpenAsync(launchId), Times.Once);
+            _processLaunchRepositoryMock.Verify(repo => repo.UpdateAsync(It.IsAny<Financiallaunch>()), Times.Never);
+            _INotificationEvent.Verify(notify => notify.SendAsync(It.IsAny<FinanciallaunchEvent>()), Times.Never);
         }
     }
 }
+
+

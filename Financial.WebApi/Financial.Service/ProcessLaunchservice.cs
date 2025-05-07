@@ -30,7 +30,7 @@ namespace Financial.Service
 
                 var financialLaunchEntity = new Financiallaunch(createFinanciallaunchDto);
 
-         
+
                 var launchExist = await _processLaunchRepository.GetByIdempotencyKeyAsync(createFinanciallaunchDto.IdempotencyKey);
 
                 if (launchExist != null)
@@ -40,7 +40,9 @@ namespace Financial.Service
 
                 var launch = await _processLaunchRepository.CreateAsync(financialLaunchEntity);
 
+
                 await _notificationEvent.SendAsync(new FinanciallaunchEvent(launch));
+
 
                 return launch.MapToDto();
 
@@ -54,6 +56,7 @@ namespace Financial.Service
                 throw ex;
             }
         }
+
         public async Task<FinanciallaunchDto> ProcessCancelLaunchAsync(CancelFinanciallaunchDto cancelFinanciallaunchDto)
         {
             if (cancelFinanciallaunchDto.Id == Guid.Empty)
@@ -61,22 +64,46 @@ namespace Financial.Service
                 throw new ApplicationException($"Error: Check if the data is correct. Some information that makes up the Id is incorrect or does not match the ID");
             }
 
-            var launchExist = await _processLaunchRepository.GetAsync(cancelFinanciallaunchDto.Id);
+            var launchExist = await _processLaunchRepository.GetByIdStatusOpenAsync(cancelFinanciallaunchDto.Id);
+
+            if (launchExist == null)
+            {
+                throw new ApplicationException($"Info: The release cannot be canceled. Status other than \"Open\"");
+            }
 
             launchExist.Cancel(cancelFinanciallaunchDto.Description);
 
             var launch = await _processLaunchRepository.UpdateAsync(launchExist);
 
+            await _notificationEvent.SendCancelAsync(new FinanciallaunchEvent(launch));
+
+
             return launch.MapToDto();
         }
 
-        public Task<FinanciallaunchDto> ProcessEditLaunchAsync(AlterFinanciallaunchDto alterFinanciallaunchDto)
+        public async Task<FinanciallaunchDto> ProcessPayLaunchAsync(PayFinanciallaunchDto payFinanciallaunchDto)
         {
-            throw new NotImplementedException();
+            if (payFinanciallaunchDto.Id == Guid.Empty)
+            {
+                throw new ApplicationException($"Error: Check if the data is correct. Some information that makes up the Id is incorrect or does not match the ID");
+            }
+
+            var launchExist = await _processLaunchRepository.GetByIdStatusOpenAsync(payFinanciallaunchDto.Id);
+
+            if (launchExist == null)
+            {
+                throw new ApplicationException($"Info: The release cannot be canceled. Status other than \"Open\"");
+            }
+
+            launchExist.PayOff();
+
+            var launch = await _processLaunchRepository.UpdateAsync(launchExist);
+
+            await _notificationEvent.SendPaidAsync(new FinanciallaunchEvent(launch));
+
+            return launch.MapToDto();
         }
-        public Task<FinanciallaunchDto> ProcessPayLaunchAsync(AlterFinanciallaunchDto alterFinanciallaunchDto)
-        {
-            throw new NotImplementedException();
-        }
+
+
     }
 }

@@ -23,16 +23,20 @@ namespace Financial.Service
         {
             try
             {
-                if(financiallaunchEvent == null || financiallaunchEvent.Entity == null || financiallaunchEvent.Entity.Value == 0)
+                if (financiallaunchEvent == null || financiallaunchEvent.Entity == null || financiallaunchEvent.Entity.Value == 0)
                 {
                     _logger.LogWarning("FinanciallaunchService: FinanciallaunchEvent is null or has no value.");
                     return;
-                }   
+                }
 
                 _logger.LogInformation($"FinanciallaunchService: FinanciallaunchEvent.Value: {financiallaunchEvent.Entity.Value}", financiallaunchEvent.Entity.Value);
 
-                await _financiallaunchRespository.SaveBalanceAsync(financiallaunchEvent.Entity.Value);
 
+                if (financiallaunchEvent.Entity.PaymentMethod == 1 || financiallaunchEvent.Entity.PaymentMethod == 2)
+                {
+                    await _financiallaunchRespository.SaveBalanceAsync(financiallaunchEvent.Entity.Value);
+                }
+                
                 await _financiallaunchRespository.SaveLauchAsync(financiallaunchEvent.Entity);
             }
             catch (Exception ex)
@@ -59,7 +63,7 @@ namespace Financial.Service
         {
             try
             {
-               return await _financiallaunchRespository.GetLauchAsync();
+                return await _financiallaunchRespository.GetLauchAsync();
             }
             catch (Exception ex)
             {
