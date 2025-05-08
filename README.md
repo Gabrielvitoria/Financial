@@ -152,3 +152,31 @@ docker build -t financial-app -f Dockerfile .
 ```bash
 docker build -t financial-report-image-app -f Dockerfile .
 ```
+
+##
+####  Exemplo de payload gerar um token
+```json
+curl -X POST \
+  http://localhost:44369/api/v1/Authenticate/login \
+  -H 'Content-Type: application/json' \
+  -d '{
+    "userName": "master",
+    "password": "master"
+  }'
+```
+
+##
+####  Exemplo de payload para criar um lançamento
+```json
+{
+  "idempotencyKey": "33A5A8E9-F0B3-48D3-873C-95A66EF118CC",
+  "launchType": 1,
+  "paymentMethod": 1,
+  "coinType": "USD",
+  "value": 100.98,
+  "bankAccount": "453262",
+  "nameCustomerSupplier": "Nome novo de Customer",
+  "costCenter": "666",
+  "description": ""
+}
+```
