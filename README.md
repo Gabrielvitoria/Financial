@@ -60,17 +60,23 @@ Essa arquitetura para o controle de fluxo de caixa diário utiliza um padrão de
 *   **Segurança:** Validação do token JWT enviado no header da requisição (e.g., `Authorization: Bearer <token>`) para garantir que apenas clientes autenticados possam acessar o saldo.
   * **Autorização:** O token JWT pode conter claims que definem o nível de acesso do usuário (No caso apenas usuários com claim 'master' podem realizar operações).
 
+### 3.7. Fluxos de negócios
+
+  * **Fluxo de Lançamentos:** O cliente envia um lançamento para a API de Lançamentos, que valida e enfileira a mensagem no RabbitMQ. O Serviço de Saldo consome a mensagem, processa o lançamento e atualiza o saldo no Redis.
+  * **Fluxo de Consulta de Saldo:** O cliente envia uma requisição GET para a API de Saldo, que consulta o saldo diretamente no Redis e retorna a resposta.
+  * **Fluxo de Pagamento:** O cliente envia uma requisição POST para a API de Pagar, que consulta o ID informado e existe lançamento com status aberto. Caso tenha, confirma o pagamento e enfileira a mensagem no RabbitMQ com novo status. O Serviço de Saldo consome a mensagem, processa o lançamento e atualiza o saldo e o lançamento no Redis.
+    
 ## 4\. Escalabilidade
 
-\[Seção detalhando as estratégias de escalabilidade para cada componente.\]
+*   A API de Lançamentos pode ser escalada horizontalmente adicionando mais instâncias em containers Docker. Um balanceador de carga (como o YARP) distribui o tráfego entre as instâncias.
 
 ## 5\. Resiliência
 
-\[Seção detalhando as estratégias de tratamento de falhas e garantia de disponibilidade para cada componente.\]
+*   O RabbitMQ garante a resiliência usando filas duráveis, que persistem as mensagens em disco. Se o Serviço de Saldo falhar, as mensagens serão entregues quando ele se recuperar.
 
 ## 6\. Segurança
 
-\[Seção detalhando as medidas de segurança implementadas em cada camada, incluindo autenticação, autorização e proteção de dados.\]
+A API de Autenticação usa HTTPS para criptografar a comunicação. Os tokens JWT são assinados para garantir sua integridade. Todas as APIs verificam o token JWT no header Authorization para autorizar o acesso.
 
 ## 7\. Monitoramento e Observabilidade
 
@@ -81,8 +87,17 @@ Essa arquitetura para o controle de fluxo de caixa diário utiliza um padrão de
 \[Seção detalhando a estratégia e as ferramentas para testes de carga.\]
 
 ## 9\. Evoluções Futuras
+*   Otimização do fluxo de pagamento, onde o cliente pode enviar um lançamento com status "pago" e o sistema irá verificar se existe um lançamento com status "aberto" para o mesmo ID. Caso exista, o sistema irá confirmar o pagamento e atualizar o saldo no Redis.
+*   Implementação de um sistema de notificações para alertar os usuários sobre lançamentos pendentes ou vencidos.
+  * Implementação de um sistema de relatórios para gerar relatórios financeiros detalhados com base nos lançamentos registrados.
+  * Implementação de um sistema de auditoria para registrar todas as operações realizadas no sistema, incluindo criação, atualização e exclusão de lançamentos.
+  * Implementação de um sistema de backup e recuperação para garantir a integridade dos dados em caso de falhas.
+  * Implementação de um sistema de autenticação multifator (MFA) para aumentar a segurança do sistema.
+  * Implementação de um sistema de controle de acesso baseado em papéis (RBAC) para gerenciar permissões de usuários e grupos. Pois atualmente o sistema só possui dois usuários com permissões diferentes, mas não há controle de acesso granular para diferentes operações ou recursos.
+  * Implementação de um sistema de orquestramento de containers (como Kubernetes) para gerenciar a escalabilidade e resiliência da aplicação em produção.
+  * Implementação de um sistema de CI/CD (Integração Contínua/Entrega Contínua) para automatizar o processo de build, teste e deploy da aplicação.
+ 
 
-\[Seção com possíveis melhorias e expansões do sistema.\]
 
 ## 10\. Documentação das API
 *  A solução utiliza **SCALAR** que fornece uma documentação das API de maneira padronizada. Scalar - Document, Test & Discover APIs
@@ -100,9 +115,11 @@ docker-compose up -d --build
 
 * Financial API: http://localhost:44367/scalar/v1
  
-* Financial API Report: http://localhost:44367/scalar/v1/Report/DailyBalance
+* Financial API Report: http://localhost:44368/scalar/v1
+* 
+* YARP API: http://localhost:44369/scalar/v1
 
-* RabbitMQ Manager: http://localhost:15672/#/
+* RabbitMQ Manager: http://localhost:15672/
 
 Tem disponível dois usuários:
 ```bash
