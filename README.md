@@ -80,7 +80,131 @@ A API de Autenticação usa HTTPS para criptografar a comunicação. Os tokens J
 
 ## 7\. Monitoramento e Observabilidade
 
-\[Seção detalhando as métricas, ferramentas e alertas para monitorar o sistema.\]
+1. API de Lançamentos e API de Saldo:
+
+  **Instrumentação:**
+
+Utilziar os pacotes do OpenTelemetry ao projeto ASP.NET Core.
+Configure o OpenTelemetry no Program.cs para coletar métricas, traces e logs.
+Use as instrumentações fornecidas pelo OpenTelemetry para coletar dados automaticamente (por exemplo, instrumentação do ASP.NET Core, instrumentação do HttpClient).
+Exportar os dados para o coletor OTLP.
+##
+  **Métricas Importantes:**
+
+Tempo de resposta dos endpoints da API.
+Taxa de requisições por endpoint.
+Taxa de erros (códigos de status HTTP).
+Uso de recursos (CPU, memória).
+Tamanho das mensagens enviadas/recebidas.
+
+##
+  **Traces Importantes:**
+
+Propague o contexto de trace entre os serviços para rastrear as requisições de ponta a ponta.
+Capture informações sobre as chamadas de banco de dados, chamadas a outros serviços e outras operações relevantes.
+
+##
+
+ **Logs Importantes:**
+
+Registre eventos importantes na vida útil de uma requisição.
+Use um formato de log estruturado para facilitar a análise.
+
+ **Por que instrumentar:**
+
+Para entender o desempenho e o comportamento interno das suas APIs.
+Para identificar gargalos e otimizar o código.
+Para diagnosticar erros e problemas de desempenho.
+Para correlacionar as requisições entre os serviços e entender o fluxo completo.
+##
+
+2. Serviço de Saldo:
+
+**Instrumentação:**
+
+Adicione os pacotes do OpenTelemetry ao seu projeto.
+Configure o OpenTelemetry para coletar métricas, traces e logs.
+Instrumente o código que interage com o RabbitMQ e o Redis.
+Exporte os dados para o coletor OTLP.
+##
+
+ **Métricas Importantes:**
+Número de mensagens consumidas do RabbitMQ.
+Tempo de processamento das mensagens.
+Latência das operações do Redis.
+Uso de recursos (CPU, memória).
+Tamanho das mensagens processadas.
+##
+
+ **Traces Importantes:**
+Capture informações sobre as operações do RabbitMQ (consumo, confirmação).
+Capture informações sobre as operações do Redis (leituras, gravações).
+Propague o contexto de trace para correlacionar as operações com as requisições da API.
+
+##
+
+**Logs Importantes:**
+Registrar eventos importantes no processamento das mensagens.
+Registre erros e exceções.
+
+##
+**Por que instrumentar:**
+Entender o desempenho e o comportamento do serviço de processamento.
+Identificar gargalos no processamento das mensagens.
+Diagnosticar erros e falhas no processamento.
+Entender o impacto do serviço de processamento no desempenho geral da aplicação.
+
+##
+
+3. RabbitMQ e Redis:
+
+Embora não precise instrumentar o RabbitMQ e o Redis diretamente no sentido de adicionar código neles, pode-se coletar métricas e logs deles.
+
+**RabbitMQ:**
+
+O RabbitMQ fornece métricas via sua API HTTP ou Prometheus exporter.
+Métricas como:
+
+* Número de mensagens nas filas.
+* Taxa de consumo/produção de mensagens.
+* Número de conexões.
+* O RabbitMQ também gera logs que você pode coletar.
+##
+**Redis:**
+O Redis fornece métricas via o comando INFO.
+
+ Métricas como:
+* Uso de memória.
+* Número de conexões.
+* Número de operações por segundo.
+* Latência das operações.
+
+##
+
+**Como coletar:**
+
+* Usar o Prometheus para coletar métricas do RabbitMQ e do Redis.
+* Configurar o RabbitMQ para expor métricas via Prometheus exporter.
+* Usar ferramentas de coleta de logs (como Fluentd ou Logstash) para coletar os logs.
+
+**Por que coletar:**
+
+* Monitorar a saúde e o desempenho do RabbitMQ e do Redis.
+* Identificar problemas de desempenho ou capacidade.
+* Correlacionar os problemas do RabbitMQ ou Redis com os problemas da sua aplicação.
+
+* ##
+
+**Em Resumo:**
+
+Para ter uma observabilidade completa:
+
+* Instrumentar todos os seus serviços com o OpenTelemetry.
+* Configurar o coletor OTLP para receber e processar os dados.
+* Usar o Prometheus para coletar métricas.
+* Usar o Grafana para visualizar as métricas e os traces.
+* Coletar métricas e logs do RabbitMQ e do Redis para monitorar a infraestrutura.
+
 
 ## 8\. Testes de Carga
 
