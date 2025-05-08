@@ -23,11 +23,25 @@ services:
       - rabbitmq
       - redis
     ports:
-      - "44368:8081" # HTTP mapping
+      - "44368:8080" # HTTP mapping
     restart: always
     environment: 
       - DBHOST=databaserabbitmq
       - ASPNETCORE_ENVIRONMENT=Docker      
+  yarp:
+    image: financial-yarp-image-app
+    container_name: yarp-financial-app
+    build:
+      context:  /Financial.Yarp
+      dockerfile: Financial.Yarp/Dockerfile
+    depends_on: 
+      - api
+      - api-report
+    ports:
+      - "44369:8080" # HTTP mapping
+    restart: always
+    environment: 
+      - ASPNETCORE_ENVIRONMENT=Docker
   database:
     image: postgres
     container_name: postgres

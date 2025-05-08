@@ -1,0 +1,6 @@
+@Financial.Yarp_HostAddress = http://localhost:5017
+
+GET {{Financial.Yarp_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36017.23 d17.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Financial.Yarp", "Financial.Yarp\Financial.Yarp.csproj", "{0ED86E5F-F6B9-4395-8F58-72FA3C49B3D9}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0ED86E5F-F6B9-4395-8F58-72FA3C49B3D9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0ED86E5F-F6B9-4395-8F58-72FA3C49B3D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0ED86E5F-F6B9-4395-8F58-72FA3C49B3D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0ED86E5F-F6B9-4395-8F58-72FA3C49B3D9}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E71CFF79-350A-4116-B877-63A37898385D}
+	EndGlobalSection
+EndGlobal
