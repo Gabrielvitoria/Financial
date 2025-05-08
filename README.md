@@ -20,6 +20,75 @@ Essa arquitetura para o controle de fluxo de caixa diário utiliza um padrão de
 *   **Escalabilidade:** Escalável horizontalmente com múltiplas instâncias rodando atrás de um balanceador de carga (interno ou externo).
 *   **Resiliência:** Configurado com retries e circuit breakers para lidar com falhas temporárias nas APIs backend.
 *   **Segurança:** Implementação de HTTPS, possível tratamento de CORS e outras políticas de segurança.
+*   **Autenticação:** O YARP pode ser configurado para validar tokens JWT antes de encaminhar as requisições para as APIs backend. Isso garante que apenas requisições autenticadas sejam processadas.
+*   **Autorização:** O YARP pode ser configurado para verificar claims específicas no token JWT, permitindo ou negando o acesso a determinados endpoints com base nas permissões do usuário.
+*   **Exemplo:** Se o token JWT contiver uma claim "role" com o valor "admin", o YARP pode permitir o acesso a endpoints administrativos, enquanto bloqueia o acesso a usuários sem essa claim.
+*   **Configuração:** O YARP pode ser configurado através de um arquivo JSON ou programaticamente, permitindo flexibilidade na definição de rotas e regras de autenticação/autorização.
+*   **A configuração do YARP:** O YARP é configurado através de um arquivo JSON, onde são definidas as rotas e os destinos para cada serviço. O arquivo de configuração pode ser facilmente modificado para adicionar ou remover serviços, permitindo uma gestão dinâmica das rotas.
+```json
+{
+    "ReverseProxy": {
+    "Routes": {
+      // Rotas para o Container Report
+      "report-daily-balance": {
+        "ClusterId": "cluster-report",
+        "Match": {
+          "Path": "/dailybalance"
+        }
+      },
+      "report-daily-launch": {
+        "ClusterId": "cluster-report",
+        "Match": {
+          "Path": "/dailylaunch"
+        }
+      },
+      // Rotas para o Container Financeiro
+      "financial-launch": {
+        "ClusterId": "cluster-financial",
+        "Match": {
+          "Path": "/launch"
+        }
+      },
+      "financial-pay": {
+        "ClusterId": "cluster-financial",
+        "Match": {
+          "Path": "/pay"
+        }
+      },
+      // Rota para Autenticação
+      "financial-auth-login": {
+        "ClusterId": "cluster-auth",
+        "Match": {
+          "Path": "/login"
+        }
+      }
+    },
+    "Clusters": {
+      "cluster-report": {
+        "Destinations": {
+          "report-service": {
+            "Address": "http://financial-report-app:8081/api/v1/Report"
+          }
+        }
+      },
+      "cluster-financial": {
+        "Destinations": {
+          "financial-service": {
+            "Address": "http://financial-app:8080/api/v1/Financial"
+          }
+        }
+      },
+      "cluster-auth": {
+        "Destinations": {
+          "auth-service": {
+             "Address": "http://financial-app:8080/api/v1/Authenticate" 
+          }
+        }
+      }
+    }
+  }
+}
+```
 
 ### 3.2. API de Lançamentos (Recebimento e Autenticação)
 
@@ -29,14 +98,46 @@ Essa arquitetura para o controle de fluxo de caixa diário utiliza um padrão de
 *   **Escalabilidade:** Escalável horizontalmente com múltiplas instâncias. O YARP distribui a carga entre as instâncias.
 *   **Resiliência:** A funcionalidade de recebimento de lançamentos se beneficia do desacoplamento via RabbitMQ. A disponibilidade da autenticação é crucial para o acesso ao sistema; múltiplas instâncias da API ajudam na resiliência.
 *   **Segurança:**
-    *   **Autenticação:** Implementação de um fluxo de autenticação (e.g., via POST de credenciais para `/auth/login`) que retorna um token JWT em caso de sucesso.
-    *   **Autorização:** Utilização do token JWT para autorizar o acesso aos endpoints de recebimento de lançamentos (`/api/lancamentos`) e (potencialmente) a outros recursos. As claims no token (como roles) podem ser usadas para controle de acesso.
+    *   **Autenticação:** Implementação de um fluxo de autenticação (e.g., via POST de credenciais para `/login`) que retorna um token JWT em caso de sucesso.
+    *   **Autorização:** Utilização do token JWT para autorizar o acesso aos endpoints de recebimento de lançamentos (`/launch`) e (potencialmente) a outros recursos. As claims no token (como roles) podem ser usadas para controle de acesso.
+* **Validações:** A APi de Lançamentos realiza validações de dados de entrada, como verificar se o ID do lançamento já existe, se o valor é positivo e se os campos obrigatórios estão preenchidos. Caso as validações falhem, a API retorna um erro apropriado.
+* **Exemplo de Payload:** O payload para criar um lançamento inclui campos como `idempotencyKey`, `launchType`, `paymentMethod`, `coinType`, `value`, `bankAccount`, `nameCustomerSupplier`, `costCenter` e `description`. Esses campos são validados antes de serem enfileirados no RabbitMQ.
+```json
+{
+  "idempotencyKey": "33A5A8E9-F0B3-48D3-873C-95A66EF118CC",
+  "launchType": 1,
+  "paymentMethod": 1,
+  "coinType": "USD",
+  "value": 100.98,
+  "bankAccount": "453262",
+  "nameCustomerSupplier": "Nome novo de Customer",
+  "costCenter": "666",
+  "description": ""
+}
+```
+* **Exemplo de Payload de Autenticação:** O payload para autenticação inclui campos como `userName` e `password`. A API valida as credenciais e retorna um token JWT em caso de sucesso.
+```json
+{
+  "userName": "master",
+  "password": "master"
+}
+```
+
+
 
 ### 3.3. RabbitMQ (Fila de Mensagens)
 
 *   **Responsabilidade:** Fila de mensagens robusta e confiável para desacoplar a API de recebimento do serviço de saldo. Garante que os lançamentos sejam processados mesmo se o serviço de saldo estiver temporariamente indisponível.
 *   **Escalabilidade:** Escalável aumentando o número de filas, exchanges e consumers.
 *   **Resiliência:** Configuração de filas duráveis para garantir a persistência das mensagens em caso de falha do broker. Utilização de dead-letter queues (DLQs) para tratamento de mensagens que não puderam ser processadas. Mecanismos de confirmação de entrega para garantir que as mensagens sejam processadas pelo menos uma vez.
+*   **Configuração:** O RabbitMQ está configurado com características do Exchange Padrão (Default Exchange):
+
+ **Nome:** O nome do exchange padrão é uma string vazia ("").
+
+ **Tipo:** O tipo do exchange padrão é direct.
+
+ **Binding Implícito:** Binding entre o exchange padrão e a fila. A chave de roteamento (routing key) desse binding é o nome da fila.
+
 
 ### 3.4. Serviço de Saldo
 
