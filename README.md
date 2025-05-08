@@ -113,13 +113,13 @@ Exemplo da solução utilizando:
 docker-compose up -d --build
 ```
 
-* Financial API: http://localhost:44367/scalar/v1
+*  **Financial API:** http://localhost:44367/scalar/v1
  
-* Financial API Report: http://localhost:44368/scalar/v1
-* 
-* YARP API: http://localhost:44369/scalar/v1
+*  **Financial API Report:** http://localhost:44368/scalar/v1
 
-* RabbitMQ Manager: http://localhost:15672/
+*  **YARP API:** http://localhost:44369/scalar/v1
+
+*  **RabbitMQ Manager:** http://localhost:15672/
 
 Tem disponível dois usuários:
 ```bash
