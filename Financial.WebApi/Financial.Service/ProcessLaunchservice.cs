@@ -3,6 +3,7 @@ using Financial.Domain.Dtos;
 using Financial.Domain.Maps;
 using Financial.Infra.Interfaces;
 using Financial.Service.Interfaces;
+using Microsoft.Extensions.Logging;
 
 namespace Financial.Service
 {
@@ -10,12 +11,15 @@ namespace Financial.Service
     {
         private readonly IProcessLaunchRepository _processLaunchRepository;
         private readonly INotificationEvent _notificationEvent;
+        private readonly ILogger<ProcessLaunchservice> _logger;
+
 
         public ProcessLaunchservice(IProcessLaunchRepository processLaunchRepository,
-            INotificationEvent notificationEvent)
+            INotificationEvent notificationEvent, ILogger<ProcessLaunchservice> logger)
         {
             _processLaunchRepository = processLaunchRepository;
             _notificationEvent = notificationEvent;
+            _logger = logger;
         }
 
 
@@ -25,7 +29,9 @@ namespace Financial.Service
             {
                 if (!createFinanciallaunchDto.IdempotencyKeyValid)
                 {
-                    throw new ApplicationException($"Error: Check if the data is correct. Some information that makes up the Idempotency is incorrect or does not match the idempotency");
+                    var msg = $"Error: Check if the data is correct. Some information that makes up the Idempotency is incorrect or does not match the idempotency";
+                    _logger.LogError(msg);
+                    throw new ApplicationException(msg);
                 }
 
                 var financialLaunchEntity = new Financiallaunch(createFinanciallaunchDto);
@@ -48,16 +54,19 @@ namespace Financial.Service
 
                 await _notificationEvent.SendAsync(new FinanciallaunchEvent(launch));
 
+                _logger.LogInformation($"Launch created: {launch.Id}");
 
                 return launch.MapToDto();
 
             }
             catch (ApplicationException aex)
             {
+                _logger.LogError($"Erro: ", aex.Message);
                 throw aex;
             }
             catch (Exception ex)
             {
+                _logger.LogError($"Erro: ", ex.Message);
                 throw ex;
             }
         }
@@ -90,14 +99,18 @@ namespace Financial.Service
         {
             if (payFinanciallaunchDto.Id == Guid.Empty)
             {
-                throw new ApplicationException($"Error: Check if the data is correct. Some information that makes up the Id is incorrect or does not match the ID");
+                var msg = $"Error: Check if the data is correct. Some information that makes up the Id is incorrect or does not match the ID";
+                _logger.LogError(msg);
+                throw new ApplicationException(msg);
             }
 
             var launchExist = await _processLaunchRepository.GetByIdStatusOpenAsync(payFinanciallaunchDto.Id);
 
             if (launchExist == null)
             {
-                throw new ApplicationException($"Info: The release cannot be canceled. Status other than \"Open\"");
+                var msg = $"Info: The release cannot be canceled. Status other than \"Open\"";
+                _logger.LogError(msg);
+                throw new ApplicationException(msg);
             }
 
             launchExist.PayOff();
@@ -105,6 +118,8 @@ namespace Financial.Service
             var launch = await _processLaunchRepository.UpdateAsync(launchExist);
 
             await _notificationEvent.SendPaidAsync(new FinanciallaunchEvent(launch));
+
+            _logger.LogInformation($"Launch paid: {launch.Id}");
 
             return launch.MapToDto();
         }

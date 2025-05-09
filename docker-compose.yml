@@ -74,6 +74,18 @@ services:
     command: redis-server --requirepass Redis2019!
     ports:
       - "6379:6379"
+  # k6:
+  #  build:
+  #   context: ./Financial.k6  # Caminho para o diretório com o Dockerfile
+  #   dockerfile: Dockerfile     # Nome do Dockerfile
+  #  container_name: k6-load-test
+  #  depends_on:
+  #   - api
+  #   - api-report
+  #   - database
+  #   - rabbitmq
+  #   - redis
+  #   - yarp
 volumes:
   db-volume:
   rabbitmq-lib:

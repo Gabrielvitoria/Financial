@@ -309,7 +309,68 @@ Para ter uma observabilidade completa:
 
 ## 8\. Testes de Carga
 
-\[Seção detalhando a estratégia e as ferramentas para testes de carga.\]
+Este guia detalha como avaliar os resultados dos testes de carga executados com k6 para as APIs de autenticação, criação de lançamentos e relatório de saldo diário.
+```bash
+Financial
+└── Financial.k6
+    ├── 01.dailyBalance.js     (Script k6 para criar lançamentos 1000 de R$1.00)
+    ├── 02.dailyBalance.js     (Script k6 para testar relatório de saldo diário) - Após esse teste, o saldo diário deverá ser de R$1000.00. Deverá ser rodado antes dos outros testes para não atrapalhar o saldo diário. Recomento destruir os container e criar novamente.
+    ├── Anotações e cenários.txt (Registro de planejamento e contexto dos testes com os resultados)
+    ├── auth.js                (Script k6 para testar API de autenticação)
+    ├── Dockerfile             (Configuração Docker para ambiente de teste - opcional)
+    ├── lauch.js               (Script k6 para testar criação de um lançamento)
+    └── pay.js                 (Script k6 para testar fluxo de lançamento e pagamento)
+```
+Para cada teste, observe as seguintes métricas principais:
+
+**checks_succeeded:** Indica a porcentagem de verificações bem-sucedidas. O valor ideal é 100%, garantindo que as respostas da API atendem aos critérios esperados (status code, formato do corpo, etc.). Qualquer valor abaixo de 100% indica falhas que precisam ser investigadas.
+
+**http_req_duration:** Mede o tempo que as requisições HTTP levam para serem concluídas. Analise:
+
+**avg (média):** O tempo de resposta médio para todas as requisições. Valores altos podem indicar lentidão geral.
+p(90) e p(95) (percentis 90 e 95): Indicam o tempo de resposta para 90% e 95% das requisições, respectivamente. Esses valores são importantes para entender a experiência da maioria dos usuários, pois os valores médios podem ser distorcidos por outliers.
+
+**max (máximo):** O tempo de resposta mais longo. Valores muito altos podem indicar problemas intermitentes ou gargalos severos.
+
+**http_req_failed:** Indica a porcentagem de requisições HTTP que falharam completamente (e.g., timeouts, erros de conexão). O valor ideal é 0%. Qualquer valor acima indica instabilidade ou problemas na API sob carga.
+
+**http_reqs:** Mostra o número total de requisições enviadas e a taxa de requisições por segundo (throughput). Um throughput baixo sob alta concorrência pode indicar gargalos.
+
+**iterations:** O número total de vezes que o script principal do k6 foi executado. Compare com o número de VUs e a duração do teste para entender a taxa de execução.
+
+**vus:** O número de usuários virtuais ativos durante o teste. Certifique-se de que corresponde ao configurado.
+
+**dropped_iterations:** Indica o número de iterações que o k6 não conseguiu completar dentro da duração do teste. Um número alto pode sugerir que a carga era muito alta para a duração configurada ou que as iterações estavam demorando muito para serem concluídas.
+
+### Avaliação Específica por Teste:
+
+#### **Autenticação (1000 VUs):**
+
+* Aceitável: checks_succeeded: 100%, http_req_failed: 0%.
+
+* Preocupante: Latência média e percentis altos (p(90), p(95) acima de 1-2 segundos), baixo throughput (< 50 req/s), alto número de dropped_iterations.
+* Ação: Investigar a performance do servidor de autenticação sob alta concorrência.
+* Novo Lançamento + Autenticação (100 VUs):
+
+* Aceitável: checks_succeeded: 100%, http_req_failed: 0%.
+* Atenção: Latência média acima de 500ms, percentis 90/95 acima de 1 segundo, throughput abaixo do esperado.
+* Ação: Monitorar a latência em cargas maiores e considerar otimizações se os tempos de resposta forem considerados lentos para a experiência do usuário.
+* Saldo Criar Lançamentos (100 VUs, 1000 iterações):
+
+* Aceitável: checks_succeeded: 100%, http_req_failed: 0%, iterations próximo de 1000.
+* Atenção: Latência média acima de 1 segundo, percentis altos significativamente maiores que a média, throughput baixo para o número de VUs.
+* Ação: Analisar o desempenho da API de criação sob carga para identificar gargalos.
+* Saldo Diário - Utilizando 1000 Lançamentos (1000 VUs):
+
+* Excelente: checks_succeeded: 100%, http_req_failed: 0%, latência média abaixo de 200ms, percentis 90/95 abaixo de 500ms, throughput alto (> 5000 req/s).
+* Ação: Monitorar os recursos do servidor para garantir que ele não esteja sobrecarregado, mesmo com o bom desempenho.
+
+#### Interpretação Geral:
+
+* A ausência de falhas (http_req_failed: 0%) é um bom sinal de estabilidade básica das APIs.
+* A latência é o principal ponto de atenção, especialmente no endpoint de autenticação sob alta carga e na criação de lançamentos.
+* O throughput deve ser avaliado em relação ao número de usuários virtuais e à capacidade esperada do sistema.
+
 
 ## 9\. Evoluções Futuras
 *   Otimização do fluxo de pagamento, onde o cliente pode enviar um lançamento com status "pago" e o sistema irá verificar se existe um lançamento com status "aberto" para o mesmo ID. Caso exista, o sistema irá confirmar o pagamento e atualizar o saldo no Redis.

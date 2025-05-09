@@ -1,0 +1,155 @@
+Autenticação:
+Cenário 1000 VUs
+docker run --rm -i --network="host" grafana/k6 run - <auth.js
+
+-----------------------------------------------------------------------------------------------------------------------------------
+
+Contexto: Novo lançamento + autenticação
+Cenário: 1000 VUs
+Diretório: .\Financial\Financial.k6
+Comando: docker run --rm -i --network="host" grafana/k6 run - <lauch.js
+Resultado:
+  █ TOTAL RESULTS
+
+    checks_total.......................: 2076    51.958121/s
+    checks_succeeded...................: 100.00% 2076 out of 2076
+    checks_failed......................: 0.00%   0 out of 2076
+
+    ✓ Auth status is 200
+    ✓ Auth response contains token
+    ✓ Launch status is 200
+    ✓ Launch response body is not empty
+
+    HTTP
+    http_req_duration.......................................................: avg=939.14ms min=2.87ms med=845.28ms max=28.94s p(90)=935.86ms p(95)=982.16ms
+      { expected_response:true }............................................: avg=939.14ms min=2.87ms med=845.28ms max=28.94s p(90)=935.86ms p(95)=982.16ms
+    http_req_failed.........................................................: 0.00%  0 out of 1038
+    http_reqs...............................................................: 1038   25.979061/s
+
+    EXECUTION
+    iteration_duration......................................................: avg=13.69s   min=13.57s med=13.62s   max=13.91s p(90)=13.91s   p(95)=13.91s
+    iterations..............................................................: 36     0.901008/s
+    vus.....................................................................: 964    min=964       max=1000
+    vus_max.................................................................: 1000   min=1000      max=1000
+
+    NETWORK
+    data_received...........................................................: 413 kB 10 kB/s
+    data_sent...............................................................: 808 kB 20 kB/s
+
+running (40.0s), 0000/1000 VUs, 36 complete and 964 interrupted iterations
+default ✓ [ 100% ] 1000 VUs  10s
+
+----------------------------------------------------------------------------------------------------------------------
+
+Contexto: Novo lançamento + autenticação + Pagamento
+Cenário: 100 VUs
+Diretório: .\Financial\Financial.k6
+Comando: docker run --rm -i --network="host" grafana/k6 run - <pay.js
+
+  █ TOTAL RESULTS
+
+    checks_total.......................: 17424   574.673655/s
+    checks_succeeded...................: 100.00% 17424 out of 17424
+    checks_failed......................: 0.00%   0 out of 17424
+
+    ✓ Auth status is 200
+    ✓ Launch status is 200
+    ✓ Pay status is 200
+    ✓ Pay response body is not empty
+
+    HTTP
+    http_req_duration.......................................................: avg=230.06ms min=62.28µs  med=244.49ms max=1.59s p(90)=421.39ms p(95)=476.36ms
+      { expected_response:true }............................................: avg=230.06ms min=62.28µs  med=244.49ms max=1.59s p(90)=421.39ms p(95)=476.36ms
+    http_req_failed.........................................................: 0.00%  0 out of 13068
+    http_reqs...............................................................: 13068  431.005241/s
+
+    EXECUTION
+    iteration_duration......................................................: avg=694ms    min=277.56ms med=650.17ms max=2.08s p(90)=866.92ms p(95)=1.05s
+    iterations..............................................................: 4356   143.668414/s
+    vus.....................................................................: 100    min=100        max=100
+    vus_max.................................................................: 100    min=100        max=100
+
+    NETWORK
+    data_received...........................................................: 6.4 MB 212 kB/s
+    data_sent...............................................................: 5.2 MB 172 kB/s
+
+running (0m30.3s), 000/100 VUs, 4356 complete and 0 interrupted iterations
+default ✓ [ 100% ] 100 VUs  30s
+
+
+
+
+
+------------------------------------------------------------------------
+
+Contexto: Saldo criar lançamentos
+Cenário: 100 VUs 30s 1000 interações
+Diretório: .\Financial\Financial.k6
+Arquivo: 01.dailyBalance.js
+
+
+  █ TOTAL RESULTS
+
+    checks_total.......................: 2000    65.736441/s
+    checks_succeeded...................: 100.00% 2000 out of 2000
+    checks_failed......................: 0.00%   0 out of 2000
+
+    ✓ Auth status is 200
+    ✓ Launch created
+
+    HTTP
+    http_req_duration.......................................................: avg=458.72ms min=283.77µs med=15.76ms max=7.55s  p(90)=306.18ms p(95)=1.21s
+      { expected_response:true }............................................: avg=458.72ms min=283.77µs med=15.76ms max=7.55s  p(90)=306.18ms p(95)=1.21s
+    http_req_failed.........................................................: 0.00%  0 out of 2000
+    http_reqs...............................................................: 2000   65.736441/s
+
+    EXECUTION
+    iteration_duration......................................................: avg=3.02s    min=2.11s    med=2.19s   max=10.54s p(90)=3.16s    p(95)=10.51s
+    iterations..............................................................: 1000   32.86822/s
+    vus.....................................................................: 86     min=86        max=100
+    vus_max.................................................................: 100    min=100       max=100
+
+    NETWORK
+    data_received...........................................................: 991 kB 33 kB/s
+    data_sent...............................................................: 838 kB 28 kB/s
+------------------------------------------------------------------------
+
+
+Contexto: Saldo diario - Utilizado dos 1000 lançamentos Anteriores
+Cenário: 1000 VUs
+Diretório: .\Financial\Financial.k6
+Arquivo: 02.dailyBalance.js
+
+docker run --rm -i --network="host" grafana/k6 run - <02.dailyBalance.js
+
+  █ TOTAL RESULTS
+
+    checks_total.......................: 129510  12927.201927/s
+    checks_succeeded...................: 100.00% 129510 out of 129510
+    checks_failed......................: 0.00%   0 out of 129510
+
+    ✓ Auth status is 200
+    ✓ Report status is 200
+    ✓ Report body is a decimal
+
+    HTTP
+    http_req_duration.......................................................: avg=102.05ms min=82.72µs med=86.29ms  max=554.43ms p(90)=187.75ms p(95)=229.25ms
+      { expected_response:true }............................................: avg=102.05ms min=82.72µs med=86.29ms  max=554.43ms p(90)=187.75ms p(95)=229.25ms
+    http_req_failed.........................................................: 0.00% 0 out of 86340
+    http_reqs...............................................................: 86340 8618.134618/s
+
+    EXECUTION
+    iteration_duration......................................................: avg=224.11ms min=6.49ms  med=200.32ms max=1.23s    p(90)=355.31ms p(95)=441.13ms
+    iterations..............................................................: 43170 4309.067309/s
+    vus.....................................................................: 1000  min=1000       max=1000
+    vus_max.................................................................: 1000  min=1000       max=1000
+
+    NETWORK
+    data_received...........................................................: 24 MB 2.4 MB/s
+    data_sent...............................................................: 21 MB 2.1 MB/s
+
+
+
+
+running (10.0s), 0000/1000 VUs, 43170 complete and 0 interrupted iterations
+default ✓ [ 100% ] 1000 VUs  10s

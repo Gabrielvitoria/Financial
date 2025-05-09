@@ -1,6 +1,7 @@
 ﻿using Financial.Domain.Dtos;
 using Financial.Infra.Interfaces;
 using Financial.Service;
+using Microsoft.Extensions.Logging;
 using Moq;
 using System.ComponentModel;
 using System.IdentityModel.Tokens.Jwt;
@@ -16,6 +17,9 @@ namespace Financial.Tests
         {
             // Arrange
             var mockUserRepository = new Mock<IUserRepository>();
+            var _logger = new Mock<ILogger<TokenService>>();
+
+             
             var username = "master";
             var password = "master";
             var user = new UserDto
@@ -29,7 +33,7 @@ namespace Financial.Tests
             mockUserRepository.Setup(repo => repo.Get(It.IsAny<string>(), It.IsAny<string>())).Returns(user);
 
             
-            var tokenService = new TokenService(mockUserRepository.Object);
+            var tokenService = new TokenService(mockUserRepository.Object, _logger.Object);
 
             // Act
             var result = tokenService.GenerateToken(username, password);

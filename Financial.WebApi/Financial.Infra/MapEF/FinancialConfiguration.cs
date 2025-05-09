@@ -47,6 +47,9 @@ namespace Financial.Infra.MapEF
             builder.HasIndex(a => a.IdempotencyKey)
                    .IsUnique()
                    .HasDatabaseName("IX_Financiallaunch_IdempotencyKey");
+
+            builder.HasIndex(a => a.Status)
+                   .HasDatabaseName("IX_Financiallaunch_Status");
         }
     }
 }

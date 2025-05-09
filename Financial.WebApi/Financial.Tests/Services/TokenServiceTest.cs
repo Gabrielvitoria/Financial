@@ -1,6 +1,8 @@
-﻿using Financial.Domain.Dtos;
+﻿using Castle.Core.Logging;
+using Financial.Domain.Dtos;
 using Financial.Infra.Interfaces;
 using Financial.Service;
+using Microsoft.Extensions.Logging;
 using Moq;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -8,12 +10,14 @@ using System.Security.Claims;
 public class TokenServiceTests
 {
     private readonly Mock<IUserRepository> _mockUserRepository;
+    private readonly Mock<ILogger<TokenService>> _logger;
     private readonly TokenService _tokenService;
 
     public TokenServiceTests()
     {
         _mockUserRepository = new Mock<IUserRepository>();
-        _tokenService = new TokenService(_mockUserRepository.Object);
+        _logger = new Mock<ILogger<TokenService>>();
+        _tokenService = new TokenService(_mockUserRepository.Object, _logger.Object );
     }
 
     [Fact]
