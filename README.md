@@ -371,6 +371,13 @@ p(90) e p(95) (percentis 90 e 95): Indicam o tempo de resposta para 90% e 95% da
 * A latência é o principal ponto de atenção, especialmente no endpoint de autenticação sob alta carga e na criação de lançamentos.
 * O throughput deve ser avaliado em relação ao número de usuários virtuais e à capacidade esperada do sistema.
 
+## 8.1\. Testes de unidade
+* Projeto Financial - Web principal: 🚀
+* Projeto Financial Relatório - Web: 🔄 (Pendente realizar cobertura) ⚠️
+
+⭐ Relatório de cobertura Projeto Financial - Web principal
+<img src="https://github.com/Gabrielvitoria/Financial/blob/master/Documentacao/Summary_Coverage_Report_Financial.png">
+
 
 ## 9\. Evoluções Futuras
 *   Otimização do fluxo de pagamento, onde o cliente pode enviar um lançamento com status "pago" e o sistema irá verificar se existe um lançamento com status "aberto" para o mesmo ID. Caso exista, o sistema irá confirmar o pagamento e atualizar o saldo no Redis.
