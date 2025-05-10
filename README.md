@@ -404,6 +404,15 @@ docker run --rm -i --network="host" grafana/k6 run - <auth.js
 ⭐ Caso queira visualizar alguns testes que forame executados de basa para Interpretação Geral,  
 https://github.com/Gabrielvitoria/Financial/blob/master/Financial.k6/Anota%C3%A7%C3%B5es%20e%20cen%C3%A1rios.txt
 
+
+## 8.1\. Testes de unidade
+* Projeto Financial - Web principal: 🚀
+* Projeto Financial Relatório - Web: 🔄 (Pendente realizar cobertura) ⚠️
+
+⭐ Relatório de cobertura Projeto Financial - Web principal
+<img src="https://github.com/Gabrielvitoria/Financial/blob/master/Documentacao/Summary_Coverage_Report_Financial.png">
+
+
 ## 9\. Evoluções Futuras
 *   Otimização do fluxo de pagamento, onde o cliente pode enviar um lançamento com status "pago" e o sistema irá verificar se existe um lançamento com status "aberto" para o mesmo ID. Caso exista, o sistema irá confirmar o pagamento e atualizar o saldo no Redis.
 *   Implementação de um sistema de notificações para alertar os usuários sobre lançamentos pendentes ou vencidos.
