@@ -401,7 +401,7 @@ Para o fluxo de autenticação, execute:
 docker run --rm -i --network="host" grafana/k6 run - <auth.js
 ```
 
-** Caso queira visualizar alguns testes que forame executados de basa para Interpretação Geral,  
+⭐ Caso queira visualizar alguns testes que forame executados de basa para Interpretação Geral,  
 https://github.com/Gabrielvitoria/Financial/blob/master/Financial.k6/Anota%C3%A7%C3%B5es%20e%20cen%C3%A1rios.txt
 
 ## 9\. Evoluções Futuras
