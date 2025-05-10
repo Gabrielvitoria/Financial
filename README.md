@@ -371,6 +371,38 @@ p(90) e p(95) (percentis 90 e 95): Indicam o tempo de resposta para 90% e 95% da
 * A latência é o principal ponto de atenção, especialmente no endpoint de autenticação sob alta carga e na criação de lançamentos.
 * O throughput deve ser avaliado em relação ao número de usuários virtuais e à capacidade esperada do sistema.
 
+* Como executar os testes:*
+* Certifique-se de ter o k6 instalado ou docker e execute os scripts com o comando:
+
+Estando no diretório do script Financial\Financial.k6, execute:
+
+Exemplo:
+Para criar 1000 lançamentos de R$1.00, execute:
+```bash
+docker run --rm -i --network="host" grafana/k6 run - <01.dailyBalance.js
+```
+na sequencia, para testar o saldo diário, execute:
+```bash
+docker run --rm -i --network="host" grafana/k6 run - <02.dailyBalance.js
+```
+
+Para o fluxo de pagamento, execute:
+```bash
+docker run --rm -i --network="host" grafana/k6 run - <pay.js
+```
+
+Para o fluxo de criar lançamentos
+```bash
+docker run --rm -i --network="host" grafana/k6 run - <lauch.js
+```
+
+Para o fluxo de autenticação, execute:
+```bash
+docker run --rm -i --network="host" grafana/k6 run - <auth.js
+```
+
+** Caso queira visualizar alguns testes que forame executados de basa para Interpretação Geral,  
+https://github.com/Gabrielvitoria/Financial/blob/master/Financial.k6/Anota%C3%A7%C3%B5es%20e%20cen%C3%A1rios.txt
 
 ## 9\. Evoluções Futuras
 *   Otimização do fluxo de pagamento, onde o cliente pode enviar um lançamento com status "pago" e o sistema irá verificar se existe um lançamento com status "aberto" para o mesmo ID. Caso exista, o sistema irá confirmar o pagamento e atualizar o saldo no Redis.
