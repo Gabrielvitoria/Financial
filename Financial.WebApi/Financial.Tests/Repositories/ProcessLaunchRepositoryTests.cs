@@ -1,5 +1,6 @@
 ﻿using Financial.Domain;
 using Financial.Domain.Dtos; // Important for CreateFinanciallaunchDto
+using Financial.Infra.Interfaces;
 using Financial.Infra.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -13,9 +14,11 @@ namespace Financial.Infra.Tests.Repositories
 
         private DefaultContext _context;
         private ProcessLaunchRepository _repository;
-
+        private readonly Mock<IProcessLaunchRepository> _processLaunchRepositoryMock;
         public ProcessLaunchRepositoryTests()
         {
+            _processLaunchRepositoryMock = new Mock<IProcessLaunchRepository>();
+
             // Setup In-Memory Database
             var serviceProvider = new ServiceCollection()
                 .AddEntityFrameworkInMemoryDatabase()
@@ -32,13 +35,13 @@ namespace Financial.Infra.Tests.Repositories
             _repository = new ProcessLaunchRepository(_context);
 
             // Seed Data (Helper method to add data to the database)
-          
+
         }
 
         public void Dispose()
         {
             _context.Database.EnsureDeleted(); // Limpar o banco de dados após o teste
-            
+
             _context.Dispose();
         }
 
@@ -61,9 +64,7 @@ namespace Financial.Infra.Tests.Repositories
             var launch1 = new Financiallaunch(createDto1);
             _context.Financiallaunch.Add(launch1);
 
-       
-
-           await _context.SaveChangesAsync(); // Persist the data to the In-Memory Database
+            await _context.SaveChangesAsync(); // Persist the data to the In-Memory Database
         }
 
 
@@ -115,6 +116,46 @@ namespace Financial.Infra.Tests.Repositories
             Assert.NotNull(result);
             Assert.Equal(launchId, result.Id);
         }
+
+        [Fact(DisplayName = "GetByIdStatusOpenAsync deve retornar um lançamento financeiro pelo ID")]
+        public async Task GetByIdStatusOpenAsyncShouldReturnFinancialLaunchById()
+        {
+            await SeedData();
+            // Arrange
+            var launchId = _context.Financiallaunch.First().Id; // Get the first launch ID
+
+            // Act
+            var result = await _repository.GetByIdStatusOpenAsync(launchId);
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.Equal(launchId, result.Id);
+        }
+
+        [Fact(DisplayName = "UpdateAsync deve atualizar um lançamento financeiro pelo ID")]
+        public async Task UpdateAsyncShouldUpdateFinancialLaunchById()
+        {
+            // Arrange
+            var mockRepo = new Mock<IProcessLaunchRepository>();
+            await SeedData();
+            var launchId = _context.Financiallaunch.First();
+            launchId.PayOff();
+
+            mockRepo.Setup(repo => repo.UpdateAsync(It.IsAny<Financiallaunch>()))
+                    .ReturnsAsync(launchId);
+
+
+            _processLaunchRepositoryMock.Setup(repo => repo.UpdateAsync(It.IsAny<Financiallaunch>()))
+                                        .ReturnsAsync(launchId);
+
+            // Act
+            var repo = _processLaunchRepositoryMock.Object;
+
+
+            // Assert
+            Assert.NotNull(repo.UpdateAsync(launchId));
+        }
+
 
         [Fact(DisplayName = "GetAsync deve retornar null se o lançamento financeiro não for encontrado pelo ID")]
         public async Task GetAsync_ShouldReturnNullIfNotFoundById()

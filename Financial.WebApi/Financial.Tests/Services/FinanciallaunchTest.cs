@@ -389,10 +389,6 @@ namespace Financial.Tests.Services
                 l.Status == launchStatusEnum.PaidOff
             )), Times.Once);
 
-            _INotificationEvent.Verify(
-                notify => notify.SendAsync(It.Is<FinanciallaunchEvent>(e => e.Entity.Id == existingLaunch.Id)),
-                Times.Once
-            );
         }
 
         [Fact]

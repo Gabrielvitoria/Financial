@@ -50,16 +50,10 @@ namespace Financial.Service
             }
             catch (BrokerUnreachableException ex)
             {
-                Console.WriteLine($"Error connecting to RabbitMQ: {ex.Message}");
+                _logger.LogError($"Error connecting to RabbitMQ: {ex.Message}");
                 // Lógica para lidar com a falha de conexão (tentar novamente, logar o erro, etc.)
-                return false;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"An unexpected error occurred: {ex.Message}");
-                // Lógica para lidar com outros tipos de erros
-                return false;
-            }
+                throw ex;
+            }    
 
         }
         public async Task<bool> SendCancelAsync(FinanciallaunchEvent financiallaunchEvent)
@@ -87,18 +81,10 @@ namespace Financial.Service
             }
             catch (BrokerUnreachableException ex)
             {
-                Console.WriteLine($"Error connecting to RabbitMQ: {ex.Message}");
+                _logger.LogError($"Error connecting to RabbitMQ: {ex.Message}");
                 // Lógica para lidar com a falha de conexão (tentar novamente, logar o erro, etc.)
-
-                return false;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"An unexpected error occurred: {ex.Message}");
-                // Lógica para lidar com outros tipos de erros
-
-                return false;
-            }
+                throw ex;
+            }     
         }
 
         public async Task<bool> SendPaidAsync(FinanciallaunchEvent financiallaunchEvent)
@@ -127,33 +113,13 @@ namespace Financial.Service
             }
             catch (BrokerUnreachableException ex)
             {
-                Console.WriteLine($"Error connecting to RabbitMQ: {ex.Message}");
+                _logger.LogError($"Error connecting to RabbitMQ: {ex.Message}");
                 // Lógica para lidar com a falha de conexão (tentar novamente, logar o erro, etc.)
-                return false;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"An unexpected error occurred: {ex.Message}");
-                // Lógica para lidar com outros tipos de erros
-                return false;
-            }
+                throw ex;
+            }         
         }
 
-        private ConnectionFactory GetConnectionFactory(ConnectionQueueMenssage config)
-        {
-
-            var factory = new ConnectionFactory
-            {
-                HostName = config.HostName,
-                Port = config.Port,
-                UserName = config.UserName,
-                Password = config.Password
-            };
-
-            return factory;
-        }
-
-
+        [ExcludeFromCodeCoverage]
         private ConnectionQueueMenssage GetConfig(string queueName, string routingKeyPaid)
         {
             var config = new ConnectionQueueMenssage
@@ -172,6 +138,7 @@ namespace Financial.Service
         }
     }
 
+    [ExcludeFromCodeCoverage]
     public class ConnectionFactoryWrapper : IConnectionFactoryWrapper
     {
         public async Task<IConnection> CreateConnectionAsync(ConnectionQueueMenssage config)
@@ -186,6 +153,8 @@ namespace Financial.Service
             return await factory.CreateConnectionAsync();
         }
     }
+
+    
     public interface IConnectionFactoryWrapper
     {
         Task<IConnection> CreateConnectionAsync(ConnectionQueueMenssage config);
