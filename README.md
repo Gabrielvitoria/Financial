@@ -185,7 +185,7 @@ A API de Autenticação usa HTTPS para criptografar a comunicação. Os tokens J
 
   **Instrumentação:**
 
-Utilziar os pacotes do OpenTelemetry ao projeto ASP.NET Core.
+Utilizar os pacotes do OpenTelemetry ao projeto ASP.NET Core.
 Configure o OpenTelemetry no Program.cs para coletar métricas, traces e logs.
 Use as instrumentações fornecidas pelo OpenTelemetry para coletar dados automaticamente (por exemplo, instrumentação do ASP.NET Core, instrumentação do HttpClient).
 Exportar os dados para o coletor OTLP.
